@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plant Disease Detection</title>
+    <style>
+        :root {
+            --emerald-50: #ecfdf5;
+            --emerald-100: #d1fae5;
+            --emerald-500: #10b981;
+            --emerald-600: #059669;
+            --emerald-700: #047857;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-300: #d1d5db;
+            --gray-400: #9ca3af;
+            --gray-500: #6b7280;
+            --gray-600: #4b5563;
+            --gray-700: #374151;
+            --gray-800: #1f2937;
+            --white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(to bottom right, var(--emerald-50), var(--emerald-100));
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 72rem;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .header h1 {
+            font-size: 2.25rem;
+            font-weight: bold;
+            color: var(--gray-800);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .header p {
+            color: var(--gray-600);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
+        @media (min-width: 1024px) {
+            .grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .card {
+            background: var(--white);
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            padding: 1.5rem;
+        }
+
+        .upload-area {
+            border: 2px dashed var(--gray-300);
+            border-radius: 0.5rem;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .upload-area:hover {
+            border-color: var(--emerald-400);
+        }
+
+        .upload-area.dragging {
+            border-color: var(--emerald-500);
+            background: var(--emerald-50);
+        }
+
+        .upload-icon {
+            width: 4rem;
+            height: 4rem;
+            margin: 0 auto 1rem;
+            color: var(--gray-400);
+        }
+
+        .upload-text {
+            color: var(--gray-500);
+            margin-bottom: 0.5rem;
+        }
+
+        .upload-subtext {
+            color: var(--gray-400);
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+        }
+
+        .btn {
+            background: var(--emerald-500);
+            color: var(--white);
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            border: none;
+            font-size: 0.875rem;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background: var(--emerald-600);
+        }
+
+        .preview-image {
+            max-height: 16rem;
+            margin: 0 auto;
+            border-radius: 0.5rem;
+            display: block;
+        }
+
+        .result-section {
+            margin-bottom: 2rem;
+        }
+
+        .result-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--gray-800);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .disease-name {
+            color: var(--emerald-600);
+            font-weight: 600;
+            font-size: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .confidence-bar {
+            width: 100%;
+            height: 0.625rem;
+            background: var(--gray-200);
+            border-radius: 9999px;
+            margin: 0.5rem 0;
+        }
+
+        .confidence-fill {
+            height: 100%;
+            background: var(--emerald-500);
+            border-radius: 9999px;
+        }
+
+        .confidence-text {
+            text-align: right;
+            font-size: 0.875rem;
+            color: var(--gray-600);
+        }
+
+        .info-card {
+            background: var(--emerald-50);
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .info-title {
+            font-size: 1.125rem;
+            font-weight: 500;
+            color: var(--gray-700);
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .symptom-list {
+            list-style-position: inside;
+            color: var(--gray-600);
+        }
+
+        .treatment-card {
+            background: var(--white);
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        }
+
+        .treatment-name {
+            color: var(--emerald-600);
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .buy-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            padding: 0.375rem 0.75rem;
+            background: var(--emerald-100);
+            color: var(--emerald-700);
+            border-radius: 0.5rem;
+            text-decoration: none;
+            font-size: 0.875rem;
+            margin-right: 0.75rem;
+            transition: background-color 0.3s;
+        }
+
+        .buy-link:hover {
+            background: var(--emerald-200);
+        }
+
+        .loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            min-height: 16rem;
+        }
+
+        .spinner {
+            width: 3rem;
+            height: 3rem;
+            border: 2px solid var(--emerald-100);
+            border-top-color: var(--emerald-500);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>
+                {% include 'navbar.html' %}
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 2L22 8.5V15.5L12 22L2 15.5V8.5L12 2Z"/>
+                    <path d="M12 22V15.5"/>
+                    <path d="M22 8.5L12 15.5L2 8.5"/>
+                    <path d="M2 15.5L12 8.5L22 15.5"/>
+                    <path d="M12 2V8.5"/>
+                </svg>
+                Plant Disease Detection
+            </h1>
+            <p>Upload a photo of your plant leaf to identify potential diseases</p>
+        </div>
+
+        <div class="grid">
+            <div class="card">
+                <form method="POST" enctype="multipart/form-data" id="uploadForm">
+                    {% csrf_token %}
+                    <div class="upload-area" id="dropZone">
+                        <img id="previewImage" class="preview-image hidden">
+                        <div id="uploadPrompt">
+                            <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                <polyline points="17 8 12 3 7 8"/>
+                                <line x1="12" y1="3" x2="12" y2="15"/>
+                            </svg>
+                            <p class="upload-text">Drag and drop your image here</p>
+                            <p class="upload-subtext">or</p>
+                            <label class="btn">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                    <polyline points="17 8 12 3 7 8"/>
+                                    <line x1="12" y1="3" x2="12" y2="15"/>
+                                </svg>
+                                Choose File
+                                <input type="file" name="image" accept="image/*" class="hidden" id="fileInput">
+                            </label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="card">
+                <div id="loadingState" class="loading hidden">
+                    <div class="spinner"></div>
+                </div>
+
+                <div id="initialState" class="h-full flex items-center justify-center text-gray-500">
+                    <div class="text-center">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="5" y1="12" x2="19" y2="12"/>
+                            <polyline points="12 5 19 12 12 19"/>
+                        </svg>
+                        <p>Upload an image to see the analysis</p>
+                    </div>
+                </div>
+
+                {% if result %}
+                <div id="resultState">
+                    <div class="result-section">
+                        <h2 class="result-title">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"/>
+                                <line x1="12" y1="8" x2="12" y2="12"/>
+                                <line x1="12" y1="16" x2="12.01" y2="16"/>
+                            </svg>
+                            Analysis Results
+                        </h2>
+                        <div class="disease-name">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 22c-4.97 0-9-4.03-9-9s4.03-9 9-9 9 4.03 9 9-4.03 9-9 9z"/>
+                                <path d="M12 13V8"/>
+                                <path d="M12 16h.01"/>
+                            </svg>
+                            {{ result.disease }}
+                        </div>
+                        <div class="confidence-bar">
+                            <div class="confidence-fill" style="width: {{ result.confidence }}%"></div>
+                        </div>
+                        <p class="confidence-text">{{ result.confidence }}% Confidence</p>
+                    </div>
+
+                    <div class="info-card">
+                        <h3 class="info-title">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 22c-4.97 0-9-4.03-9-9s4.03-9 9-9 9 4.03 9 9-4.03 9-9 9z"/>
+                                <path d="M12 16V9"/>
+                                <path d="M12 8h.01"/>
+                            </svg>
+                            Disease Description
+                        </h3>
+                        <p class="mb-4">{{ result.description }}</p>
+                        
+                        <h4 class="font-medium mb-2">Common Symptoms:</h4>
+                        <ul class="symptom-list">
+                            {% for symptom in result.symptoms %}
+                            <li>{{ symptom }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+
+                    <div class="info-card">
+                        <h3 class="info-title">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M10 2v7.31"/>
+                                <path d="M14 9.3V1.99"/>
+                                <path d="M8.5 2h7"/>
+                                <path d="M14 9.3a6.5 6.5 0 1 1-4 0"/>
+                                <path d="M5.58 16.5h12.85"/>
+                            </svg>
+                            Treatment Plan
+                        </h3>
+                        
+                        <div class="treatment-section">
+                            <h4 class="font-medium mb-2">Cultural Control Methods:</h4>
+                            <ul class="symptom-list">
+                                {% for method in result.treatment.cultural %}
+                                <li>{{ method }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+
+                        <div class="treatment-section mt-4">
+                            <h4 class="font-medium mb-2">Recommended Pesticides:</h4>
+                            {% for chemical in result.treatment.chemical %}
+                            <div class="treatment-card">
+                                <h5 class="treatment-name">{{ chemical.name }}</h5>
+                                <p class="mb-1"><strong>Dosage:</strong> {{ chemical.dosage }}</p>
+                                <p class="mb-3"><strong>Precautions:</strong> {{ chemical.precautions }}</p>
+                                <div class="flex gap-3">
+                                    {% for link in chemical.buyLinks %}
+                                    <a href="{{ link.url }}" target="_blank" rel="noopener noreferrer" class="buy-link">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                                            <polyline points="15 3 21 3 21 9"/>
+                                            <line x1="10" y1="14" x2="21" y2="3"/>
+                                        </svg>
+                                        Buy on {{ link.name }}
+                                    </a>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="treatment-section mt-4">
+                            <h4 class="font-medium mb-2">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                                </svg>
+                                Prevention Tips:
+                            </h4>
+                            <ul class="symptom-list">
+                                {% for tip in result.treatment.prevention %}
+                                <li>{{ tip }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const dropZone = document.getElementById('dropZone');
+        const fileInput = document.getElementById('fileInput');
+        const uploadForm = document.getElementById('uploadForm');
+        const previewImage = document.getElementById('previewImage');
+        const uploadPrompt = document.getElementById('uploadPrompt');
+        const loadingState = document.getElementById('loadingState');
+        const initialState = document.getElementById('initialState');
+        const resultState = document.getElementById('resultState');
+
+        dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+
+
+
+            dropZone.classList.add('dragging');
+        });
+
+        dropZone.addEventListener('dragleave', (e) => {
+            e.preventDefault();
+            dropZone.classList.remove('dragging');
+        });
+
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.classList.remove('dragging');
+            const file = e.dataTransfer.files[0];
+            if (file && file.type.startsWith('image/')) {
+                handleFile(file);
+            }
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                handleFile(file);
+            }
+        });
+
+        function handleFile(file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                previewImage.src = e.target.result;
+                previewImage.classList.remove('hidden');
+                uploadPrompt.classList.add('hidden');
+                
+                // Show loading state
+                if (initialState) initialState.classList.add('hidden');
+                if (resultState) resultState.classList.add('hidden');
+                loadingState.classList.remove('hidden');
+                
+                // Submit the form
+                uploadForm.submit();
+            };
+            reader.readAsDataURL(file);
+        }
+    </script>
+</body>
+</html>

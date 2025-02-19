@@ -1,0 +1,83 @@
+{% load static %}
+<nav class="navbar">
+    <div class="logo">
+        <h1 data-translate="navbar-title">Fertilizer Optimizer</h1>
+    </div>
+    <ul class="nav-links">
+        <li><a href="{% url 'farmer' %}" data-translate="nav-home">Home</a></li>
+        <li><a href="{% url 'farmer_pred' %}" data-translate="nav-about-fertilizers">Optimized Fertilizer Predictor</a></li>
+        <li><a href="{% url 'knowledge' %}" data-translate="nav-news-events">Knowledge Hub</a></li>
+        <li><a href="{% url 'farmer_buy' %}" data-translate="nav-market-buy">MarketPlace</a></li>
+        <li><a href="{% url 'dis_pred' %}" data-translate="nav-news-events">Crop Disease Pred</a></li>
+        <li><a href="{% url 'micro_fin' %}" data-translate="nav-resources">Micro Finance</a></li>
+        <li><a href="{% url 'farmer_sell' %}" data-translate="nav-resources">Sell Your Crop</a></li>
+        <li><a href="" data-translate="nav-login-signup"><i class="fas fa-user"></i>Hello, farmer123</a></li>
+    </ul>
+    <div class="actions">
+        <select class="language-selector" id="language-selector">
+            <option value="en" data-translate="lang-en">English</option>
+            <option value="hi" data-translate="lang-hi">हिन्दी</option>
+            <option value="te" data-translate="lang-te">తెలుగు</option>
+            <option value="ml" data-translate="lang-ml">മലയാളം</option>
+            <option value="kn" data-translate="lang-kn">ಕನ್ನಡ</option>
+            <option value="ta" data-translate="lang-ta">தமிழ்</option>
+        </select>
+    </div>
+</nav>
+
+<!-- Embedded CSS -->
+<style>
+    .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #16423C;
+        padding: 30px 50px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1000;
+        height: 80px;
+    }
+
+    .logo h1 {
+        color: white;
+        font-size: 24px;
+        font-family: Georgia, serif;
+    }
+
+    .nav-links {
+        list-style: none;
+        display: flex;
+        gap: 20px;
+    }
+
+    .nav-links li a {
+        color: rgba(224, 221, 221, 0.849);
+        text-decoration: none;
+        font-size: 20px;
+        font-family: Georgia, serif;
+        padding: 8px 15px;
+        transition: background-color 0.2s;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .nav-links li a:hover {
+        border-bottom: 3px solid #FFC700;
+        padding-bottom: 7px;
+    }
+
+    .actions {
+        display: flex;
+        align-items: center;
+        gap: 40px;
+    }
+
+    .language-selector {
+        padding: 5px;
+        border-radius: 5px;
+    }
+</style>

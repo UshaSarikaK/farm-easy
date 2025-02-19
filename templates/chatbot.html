@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FarmEasy Voice Chatbot</title>
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    background-color: #e0f7fa;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.chat-container {
+    background: white;
+    width: 800px;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    position: relative;
+}
+
+.chat-container::before {
+    content: "FarmEasy Voice Chatbot";
+    font-size: 20px;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.chat-box {
+    height: 400px;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+    background: #fff;
+    margin-bottom: 10px;
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+#language-select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background: #f8f9fa;
+    font-size: 14px;
+}
+
+#voice-btn {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 12px 15px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    width: 100%;
+    font-weight: bold;
+    transition: background 0.3s;
+}
+
+#voice-btn:hover {
+    background-color: #218838;
+}
+
+    </style>
+</head>
+<body>
+
+    <div class="chat-container">
+        <div class="chat-box" id="chat-box"></div>
+        <select id="language-select">
+            <option value="en-US">English</option>
+            <option value="hi-IN">हिन्दी</option>
+            <option value="ta-IN">தமிழ்</option>
+            <option value="te-IN">తెలుగు</option>
+            <option value="mr-IN">मराठी</option>
+        </select>
+        <button id="voice-btn">🎤 Speak</button>
+    </div>
+
+    <script >
+        const chatBox = document.getElementById("chat-box");
+const voiceBtn = document.getElementById("voice-btn");
+const languageSelect = document.getElementById("language-select");
+
+const qaData = {
+    "how to prevent pests in crops": {
+        "en-US": "Use neem oil spray or organic pesticides.",
+        "hi-IN": "नीम के तेल का छिड़काव करें या जैविक कीटनाशकों का उपयोग करें।",
+        "ta-IN": "நீம் எண்ணெய் தெளிக்கவும் அல்லது இயற்கை பூச்சிகொல்லிகளை பயன்படுத்தவும்.",
+        "te-IN": "నిమ్మ నూనె స్ప్రే చేయండి లేదా సేంద్రీయ పురుగుమందులను ఉపయోగించండి.",
+        "mr-IN": "नीम तेलाची फवारणी करा किंवा सेंद्रिय कीटकनाशकांचा वापर करा."
+    },
+    "when is the right time to plant rice?": {
+        "en-US": "The best time to plant rice is during the monsoon season, around June to July.",
+        "hi-IN": "धान लगाने का सबसे अच्छा समय मानसून के मौसम के दौरान जून से जुलाई तक होता है।",
+        "ta-IN": "பயிர் சோதனை செய்யும் சிறந்த நேரம் மழை பருவத்தில், ஜூன் - ஜூலை மாதங்களில்.",
+        "te-IN": "పంట వేసే ఉత్తమ సమయం मानसూన్ కాలం, జూన్ నుండి జులై వరకు.",
+        "mr-IN": "धान लागवडीसाठी सर्वोत्तम वेळ मॉन्सून हंगामामध्ये, जून ते जुलै दरम्यान आहे."
+    },
+    "what are the signs of good soil for farming?": {
+        "en-US": "Good soil should be dark in color, crumbly, and well-drained.",
+        "hi-IN": "अच्छी मिट्टी का रंग गहरा होना चाहिए, वह टूटने योग्य और जल निकासी वाली होनी चाहिए।",
+        "ta-IN": "நல்ல மண்ணின் நிறம் கருநிறமாக இருக்க வேண்டும், அது உடையதாகவும், நீர் வடிகட்டி கொள்ளக்கூடியதாக இருக்க வேண்டும்.",
+        "te-IN": "మంచి మట్టికి గాఢ రంగు ఉండాలి, అది ముక్కలు కావచ్చు మరియు నీరు కారుస్తుంది.",
+        "mr-IN": "चांगली माती काळ्या रंगाची, तुटण्यास सक्षम आणि चांगली जल निचरा असावी."
+    },
+    "how to improve crop yield?": {
+        "en-US": "Use high-quality seeds, proper irrigation, and adequate fertilizers.",
+        "hi-IN": "उच्च गुणवत्ता वाले बीजों का उपयोग करें, उचित सिंचाई और उचित उर्वरकों का प्रयोग करें।",
+        "ta-IN": "உயர் தரமான பருவ பயிர்கள் பயன்படுத்தவும், சரியான நீர்ப்பாசனமும், தேவையான உரங்களும் பயன்படுத்தவும்.",
+        "te-IN": "ఎన్నో నాణ్యమైన విత్తనాలు ఉపయోగించండి, సరైన నీరాబ్రతలు మరియు సరిపోయే రసాయనాలు.",
+        "mr-IN": "उच्च गुणवत्तेच्या बियाणांचा वापर करा, योग्य सिंचन आणि पुरेशी खतांची वापर करा."
+    },
+    "how can I get a loan for farming?": {
+        "en-US": "You can get loans for farming from agricultural banks or government schemes.",
+        "hi-IN": "आप कृषि बैंकों या सरकारी योजनाओं से कृषि के लिए ऋण ले सकते हैं।",
+        "ta-IN": "நீங்கள் வேளாண்மை வங்கிகள் அல்லது அரசின் திட்டங்களிலிருந்து கடன் பெற முடியும்.",
+        "te-IN": "మీరు వ్యవసాయం కోసం బ్యాంకు లేదా ప్రభుత్వ పథకాల నుండి రుణం పొందవచ్చు.",
+        "mr-IN": "तुम्ही शेतकऱ्यांसाठी बँक किंवा सरकारी योजनांमधून कर्ज मिळवू शकता."
+    }
+};
+
+// Check for browser support
+function checkSpeechRecognition() {
+    if (!('SpeechRecognition' in window || 'webkitSpeechRecognition' in window)) {
+        chatBox.innerHTML += "<p><strong>Bot:</strong> Speech Recognition is not supported in this browser.</p>";
+        voiceBtn.disabled = true;
+        return false;
+    }
+    return true;
+}
+
+// Start listening to the user input
+function startListening() {
+    if (!checkSpeechRecognition()) return;
+
+    let selectedLanguage = languageSelect.value;
+    let recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+    recognition.lang = selectedLanguage;
+
+    // Log to confirm that listening started
+    console.log('Starting speech recognition...');
+    
+    recognition.start();
+
+    recognition.onresult = function(event) {
+        let userQuery = event.results[0][0].transcript.toLowerCase().trim();
+        chatBox.innerHTML += <p><strong>You:</strong> ${userQuery}</p>;
+        processQuery(userQuery, selectedLanguage);
+    };
+
+    recognition.onerror = function(event) {
+        console.error('Speech recognition error:', event.error);
+        chatBox.innerHTML += "<p><strong>Bot:</strong> There was an error with the voice input. Please try again.</p>";
+    };
+
+    recognition.onend = function() {
+        console.log("Speech recognition ended.");
+    };
+}
+
+// Process Query & Respond in the Same Language
+function processQuery(query, lang) {
+    let found = false;
+    query = query.toLowerCase().trim();
+
+    // Loop through the questions to match the query
+    for (let question in qaData) {
+        if (query.includes(question.toLowerCase())) {  
+            let response = qaData[question][lang] || qaData[question]["en-US"];
+            chatBox.innerHTML += <p><strong>Bot:</strong> ${response}</p>;
+            speak(response, lang);
+            found = true;
+            break;
+        }
+    }
+
+    if (!found) {
+        let defaultResponse = {
+            "en-US": "Sorry, I can only answer specific farming questions.",
+            "hi-IN": "माफ़ कीजिए, मैं केवल कुछ कृषि प्रश्नों का उत्तर दे सकता हूँ।",
+            "ta-IN": "மன்னிக்கவும், நான் குறிப்பிட்ட விவசாய கேள்விகளுக்கே பதிலளிக்க முடியும்.",
+            "te-IN": "క్షమించండి, నేను కేవలం కొన్ని వ్యవసాయ ప్రశ్నలకు మాత్రమే సమాధానం ఇవ్వగలను.",
+            "mr-IN": "माफ करा, मी केवळ विशिष्ट शेतीशी संबंधित प्रश्नांची उत्तरे देऊ शकतो."
+        };
+        chatBox.innerHTML += <p><strong>Bot:</strong> ${defaultResponse[lang]}</p>;
+        speak(defaultResponse[lang], lang);
+    }
+}
+
+// Text-to-Speech (Voice Output)
+function speak(text, lang) {
+    let speech = new SpeechSynthesisUtterance(text);
+    let voices = window.speechSynthesis.getVoices();
+    let selectedVoice = null;
+
+    // Select the voice based on the language
+    for (let voice of voices) {
+        if (voice.lang === lang) {
+            selectedVoice = voice;
+            break;
+        }
+    }
+
+    if (selectedVoice) {
+        speech.voice = selectedVoice;
+    }
+
+    speech.lang = lang;
+    window.speechSynthesis.speak(speech);
+}
+
+// Start Listening on Button Click
+voiceBtn.addEventListener("click", startListening);
+
+    </script>
+
+</body>
+</html>

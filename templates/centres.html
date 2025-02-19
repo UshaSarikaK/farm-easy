@@ -1,0 +1,229 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tourist Places</title>
+    <style>
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #16423C;
+            padding: 20px 40px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .navbar .logo h1 {
+            color: white;
+            font-size: 24px;
+            font-family: 'Lora', serif;
+        }
+
+        .navbar .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+
+        .navbar .nav-links li a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            padding: 8px 15px;
+            transition: 0.3s;
+        }
+
+        .navbar .nav-links li a:hover {
+            border-bottom: 3px solid #FFC700;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        
+        
+        
+        /* Places Section */
+        .places {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+        
+        .place-card {
+            background: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .place-card img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+        }
+        
+        .place-details {
+            padding: 15px;
+        }
+        
+        .place-details h3 {
+            color: #004d26;
+            margin: 0 0 10px;
+        }
+        
+        .place-details p {
+            margin: 5px 0;
+        }
+        
+        /* Footer */
+        footer {
+            text-align: center;
+            background-color: #004d26;
+            color: #fff;
+            padding: 10px 0;
+            margin-top: 20px;
+        }
+        /* Side-by-Side Layout */
+        /* Side-by-Side Layout with Right Alignment */
+.side-by-side {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end; /* Align content towards the right */
+    gap: 20px; /* Space between image and text */
+    margin: 20px 0;
+    padding-right: 40px; /* Adjust right padding for alignment */
+}
+
+.side-image {
+    width: 40%; /* Adjust width as needed */
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-left: 50px;
+    margin-top: 100px;
+}
+
+.side-text {
+    flex: 1; /* Ensure text takes the remaining space */
+    text-align: left; /* Keep text alignment natural */
+    margin-right: 20px; /* Add spacing from the image */
+    margin-left: 50px;
+    margin-top: 50px;
+}
+
+.side-text h2 {
+    font-size: 24px;
+    color: #004d26;
+    margin-bottom: 10px;
+}
+
+.side-text p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #333;
+}
+
+.book-now {
+    background-color: #004d26;
+    color: #fff;
+    border: none;
+    padding: 8px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.book-now:hover {
+    background-color: #003d1e;
+}
+
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <h1>FarmEasy For Tourists</h1>
+        </div>
+        <ul class="nav-links">
+            <li><a href="{% url 'tourist' %}">Home</a></li>
+            <li><a href="{% url 'tourist_centres' %}">Agriculture Centres</a></li>
+            <li><a href="{% url 'tourist_buy' %}">MarketPlace</a></li>
+            <li><a href="{% url 'garden' %}">Gardening Tips</a></li>
+            <li><a href="">Hello,tourist123</a></li>
+        </ul>
+    </nav>
+    <main>
+        <div class="side-by-side">
+            <img src="{% static 'images/lakshya.jpg' %}" alt="Sample Image" class="side-image">
+            <div class="side-text">
+                <h2 class="place-title">Lakshya's Natural Foods</h2>
+                <p>Area : Kondapur</p>
+                <p> Acres : 100 acres</p>
+                <p>Location = <a href="https://www.bing.com/maps?mepi=134%7EDirections%7EUnknown%7EDirection_Button&ty=0&rtp=pos.17.490432739257812_78.54147338867188__Lakshyas+Agri+Solutions__e_%7E&mode=d&v=2&sV=1&cp=17.490415%7E78.5415&lvl=14.5" target="_blank">Click Here</a></p>
+                <p>Time : 8:30am to 5:00pm</p>
+                <p>Entry Fee : 500 (including breakfast, lunch, and snacks)</p>
+                <p>Open on every 1st and 3rd Sunday in a month</p>
+                <button onclick="window.location.href='book';">Book Now</button>
+            </div>
+        </div>
+
+        <div class="side-by-side">
+            <img src="{% static 'images/green.jpg' %}" alt="Sample Image" class="side-image">
+            <div class="side-text">
+                <h2 class="place-title">GreenValley Farm</h2>
+                <p>Area : Lakaram</p>
+                <p> Acres : 15 acres</p>
+                <p>Location = <a href="https://www.bing.com/maps?mepi=134%7EDirections%7EUnknown%7EDirection_Button&ty=0&rtp=pos.17.490432739257812_78.54147338867188__Lakshyas+Agri+Solutions__e_%7E&mode=d&v=2&sV=1&cp=17.490415%7E78.5415&lvl=14.5" target="_blank">Click Here</a></p>
+                <p>Time : 8:30am to 6:00pm</p>
+                <p>Entry Fee : 1700 (including breakfast, lunch)</p>
+                <p>Open on every Saturday and Sunday</p>
+                <button onclick="window.location.href='book';">Book Now</button>
+            </div>
+        </div>
+
+        <div class="side-by-side">
+            <img src="{% static 'images/farm.jpg' %}" alt="Sample Image" class="side-image">
+            <div class="side-text">
+                <h2 class="place-title">Go Farm</h2>
+                <p>Area : Ramavaram</p>
+                <p> Acres : 150 acres</p>
+                <p>Location = <a href="https://www.bing.com/maps?mepi=134%7EDirections%7EUnknown%7EDirection_Button&ty=0&rtp=pos.17.490432739257812_78.54147338867188__Lakshyas+Agri+Solutions__e_%7E&mode=d&v=2&sV=1&cp=17.490415%7E78.5415&lvl=14.5" target="_blank">Click Here</a></p>
+                <p>Time : 10:30am to 5:00pm</p>
+                <p>Entry Fee : 1500 (including breakfast, lunch, and snacks)</p>
+                <p>Open on every 2nd and 4th Saturday, Sunday in a month</p>
+                <button onclick="window.location.href='book';">Book Now</button>
+            </div>
+        </div>
+
+        <div class="side-by-side">
+            <img src="{% static 'images/sun.jpg' %}" alt="Sample Image" class="side-image">
+            <div class="side-text">
+                <h2 class="place-title">Sunshine Orchads</h2>
+                <p>Area : Chelma Reddy Gudem</p>
+                <p> Acres : 90 acres</p>
+                <p>Location = <a href="https://www.bing.com/maps?mepi=134%7EDirections%7EUnknown%7EDirection_Button&ty=0&rtp=pos.17.490432739257812_78.54147338867188__Lakshyas+Agri+Solutions__e_%7E&mode=d&v=2&sV=1&cp=17.490415%7E78.5415&lvl=14.5" target="_blank">Click Here</a></p>
+                <p>Time : 10:00am to 5:00pm</p>
+                <p>Entry Fee : 1200 (including breakfast, lunch, and snacks)</p>
+                <p>Open on every 1st and 3rd Sunday in a month</p>
+                <button onclick="window.location.href='book';">Book Now</button>
+            </div>
+        </div>
+
+    </main>
+
+</body>
+</html>

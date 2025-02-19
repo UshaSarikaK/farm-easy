@@ -1,0 +1,1251 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FarmEasy</title>
+    <!-- Link to the external CSS file -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- Include Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Navbar Styles */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #16423C;
+    padding: 30px 50px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    height: 40px;
+}
+
+.logo h1 {
+    color: white;
+    font-size: 24px;
+    font-family: Georgia, serif;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+.nav-links li a {
+    color: rgba(224, 221, 221, 0.849);
+    text-decoration: none;
+    font-size: 20px;
+    font-family: Georgia, serif;
+    padding: 8px 15px;
+    transition: background-color 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: auto;
+}
+
+.nav-links li a:hover {
+    border-bottom: 3px solid #FFC700;
+    padding-bottom: 7px;
+}
+
+.actions {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+.language-selector {
+    padding: 5px;
+    margin-right: 80px;
+    border-radius: 5px;
+}
+
+/* Body Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin-top: 100px; /* Space for the navbar */
+    padding: 0;
+    margin: 0;
+    height: 100vh; /* Full height for body */
+    overflow-x: hidden;
+}
+
+/* Slider Styles */
+.slider {
+    position: relative;
+    width: 100%;
+    height: 100vh; /* Full height of the viewport */
+    overflow: hidden;
+}
+
+.slide {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transition: transform 1s ease-in-out;
+}
+
+.slider img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+   
+    
+}
+
+
+
+.text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+    text-align: center;
+    z-index: 1;
+}
+
+.text h2 {
+    font-size: 3em;
+    margin: 0;
+}
+
+.text p {
+    font-size: 1.5em;
+    margin-top: 20px;
+}
+
+/* Resources Section */
+.resources {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 100px 50px;
+    background-color: #f7f7f7;
+}
+
+.resource-text {
+    width: 50%;
+    font-family: 'Georgia', serif;
+}
+
+.resource-text h2 {
+    font-size: 2.8em;
+    color: #16423C;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.resource-points {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Spacing between points */
+}
+
+.resource-point {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+}
+
+.resource-point i {
+    font-size: 1.5em; /* Icon size */
+    color: #16423C;
+}
+
+.resource-point p {
+    font-size: 1.3em;
+    color: #333;
+    margin: 0;
+    line-height: 1.6;
+}
+
+.btn {
+    display: inline-block;
+    background-color: #16423C;
+    color: white;
+    padding: 12px 24px;
+    font-size: 1.2em;
+    text-decoration: none;
+    margin-top: 30px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.btn:hover {
+    background-color: #FFC700;
+}
+
+.resource-image {
+    width: 40%;
+}
+
+.resource-image img {
+    width: 90%;
+    height: auto;
+    border-radius: 10px;
+    margin: 0 auto;
+}
+.resource-point:hover i {
+    color: #FFC700; /* Highlight color for icons */
+    transform: scale(1.2); /* Slightly enlarge the icon */
+    transition: all 0.3s ease; /* Smooth transition */
+}
+
+
+
+/* How It Works Section */
+.how-it-works {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 50px;
+    background-color: #f7f7f7;
+}
+
+.how-it-works-image {
+    width: 40%; /* Reduced image width to 40% */
+}
+
+.how-it-works-image img {
+    width: 100%;
+    height: auto; /* Maintains aspect ratio */
+    border-radius: 10px;
+}
+
+.how-it-works-text {
+    width: 55%; /* Adjusted text width to take more space */
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.how-it-works-text h2 {
+    font-size: 2.5em;
+    color: #16423C;
+    margin-bottom: 20px;
+}
+
+.how-it-works-text p {
+    font-size: 1.2em;
+    color: #555;
+    margin-bottom: 30px;
+}
+
+.how-it-works-point {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    gap: 15px;
+}
+
+.how-it-works-point i {
+    font-size: 2em;
+    color: #16423C;
+    transition: color 0.3s, transform 0.3s;
+}
+
+.how-it-works-point div h3 {
+    font-size: 1.5em;
+    color: #16423C;
+    margin-bottom: 5px;
+}
+
+.how-it-works-point div p {
+    font-size: 1.1em;
+    color: #555;
+}
+
+.how-it-works-point:hover i {
+    color: #FFC700;
+    transform: scale(1.2); /* Interactive hover effect */
+}
+
+/* Impact Section */
+.impact {
+    padding: 60px 20px;
+    background-color: #e8f0f2;
+    text-align: center;
+}
+
+.impact-title {
+    font-size: 2.5em;
+    color: #16423C;
+    margin-bottom: 40px;
+}
+
+.impact-cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+/* Each card will take up 30% of the width (allowing for 3 per row) */
+.impact-card {
+    background-color: white;
+    width: 30%;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+    text-align: center;
+}
+
+.impact-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.impact-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.impact-card-text {
+    padding: 20px;
+}
+
+.impact-card h3 {
+    font-size: 1.6em;
+    color: #16423C;
+    margin-bottom: 10px;
+}
+
+.impact-card p {
+    font-size: 1.2em;
+    color: #555;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .impact-card {
+        width: 45%; /* 2 cards per row on medium screens */
+    }
+}
+
+@media (max-width: 768px) {
+    .impact-card {
+        width: 100%; /* 1 card per row on small screens */
+    }
+}
+/* General styles for the CSC section */
+.csc-section {
+    background-color: #f9f9f9;
+    padding: 40px;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Banner styling */
+  .csc-banner {
+    margin-bottom: 20px;
+  }
+  
+  .csc-banner-image {
+    width: 100%;
+    max-height: 300px;
+    object-fit: cover;
+    border-radius: 10px;
+  }
+  
+  /* Headline styling */
+  .csc-headline {
+    font-size: 2.5em;
+    font-weight: bold;
+    color: #2d2d2d;
+    margin-bottom: 20px;
+  }
+  
+  /* Description styling */
+  .csc-description {
+    font-size: 1.2em;
+    color: #555;
+    margin-bottom: 30px;
+    line-height: 1.6;
+  }
+  
+  /* CSC Logo styling */
+  .csc-logo img {
+    max-width: 150px;
+    margin: 20px 0;
+  }
+  
+  /* Call-to-action button styling */
+  .cta-button {
+    background-color: #0078d7;
+    color: white;
+    padding: 15px 30px;
+    font-size: 1em;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .cta-button:hover {
+    background-color: #0056a3;
+  }
+/* General Section Styling */
+.csc-overview, .csc-stats {
+    background-color: #f9f9f9;
+    padding: 40px 20px;
+    border-radius: 10px;
+    margin: 20px 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  /* Section Title Styling */
+  .csc-section-title {
+    font-size: 2em;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  /* Description Text Styling */
+  .csc-description {
+    font-size: 1.2em;
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+  
+  /* Statistics Grid */
+  .csc-stat-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+  }
+  
+  /* Individual Stat Item */
+  .stat-item {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 20px;
+    width: 200px;
+    text-align: center;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .stat-item h3 {
+    font-size: 1.2em;
+    color: #0078d7;
+    margin-bottom: 10px;
+  }
+  
+  .stat-item p {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .stat-item:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  }
+/* Section Styling */
+.csc-interactive-section {
+    text-align: center;
+    background-color: #f9f9f9;
+    padding: 40px 20px;
+    border-radius: 10px;
+    margin-top: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Grid Layout for Counters */
+  .csc-counter-grid {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin: 20px 0;
+  }
+  
+  /* Counter Item Styling */
+  .counter-item {
+    background-color: #ffffff;
+    padding: 20px;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    width: 200px;
+    text-align: center;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .counter-item h3 {
+    font-size: 1.2em;
+    color: #0078d7;
+    margin-bottom: 10px;
+  }
+  
+  .counter-item p {
+    font-size: 2em;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  /* Button Styling */
+  .cta-button {
+    display: inline-block;
+    margin: 10px;
+    padding: 15px 30px;
+    font-size: 1em;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    color: #fff;
+    background-color: #0078d7;
+  }
+  
+  .cta-button.secondary {
+    background-color: #555;
+  }
+  
+  .cta-button:hover {
+    background-color: #0056a3;
+  }
+/* Footer Styles */
+.footer {
+    background-color: #333;
+    color: #fff;
+    padding: 20px 0;
+}
+
+.footer-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 20px;
+}
+
+.footer-container div {
+    flex: 1;
+    margin: 10px;
+    min-width: 200px;
+}
+
+.footer h3 {
+    color: #f4c842;
+    margin-bottom: 15px;
+}
+
+.footer p, .footer a {
+    color: #ddd;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.footer a {
+    text-decoration: none;
+}
+
+.footer a:hover {
+    color: #f4c842;
+}
+
+.social-icons a {
+    font-size: 18px;
+    margin-right: 10px;
+    color: #ddd;
+    text-decoration: none;
+}
+
+.social-icons a:hover {
+    color: #f4c842;
+}
+
+.footer-bottom {
+    text-align: center;
+    border-top: 1px solid #444;
+    padding: 10px;
+    font-size: 14px;
+    color: #aaa;
+}
+      /* Chatbot Icon */
+  #chatbot-icon {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color:#16423C;
+    color: white;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Forum Container */
+  #forum-container {
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    width: 350px;
+    max-height: 80%;
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    display: none; /* Hidden initially */
+    flex-direction: column;
+    overflow: hidden;
+  }
+  
+  #forum-container header {
+    background-color: #16423C;
+    color: white;
+    padding: 0.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  #forum-container header h2 {
+    margin: 0;
+    font-size: 1.2rem;
+  }
+  
+  #forum-container header button {
+    background: none;
+    color: white;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+  }
+  
+  #forum-container section {
+    padding: 1rem;
+    overflow-y: auto;
+  }
+  
+  form input, form textarea, form button {
+    width: 100%;
+    padding: 0.5rem;
+    margin-top: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  form button {
+    background-color:#16423C;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  form button:hover {
+    background-color:#16423C;
+  }
+  
+  #questions-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+
+
+
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo">
+            <h1>FarmEasy</h1>
+        </div>
+        <ul class="nav-links">
+            <li><a href="{% url 'farmer' %}">Home</a></li>
+            <li><a href="{% url 'farmer_pred' %}">Optimised Fertilizer Pred</a></li>
+            <li><a href="{% url 'farmer_sell' %}">Sell Your Crop</a></li>
+            <li><a href="{% url 'dis_pred' %}">Crop Disease Pred</a></li>
+            <li><a href="{% url 'knowledge' %}">Knowledge-Hub</a></li>
+            <li><a href="{% url 'farmer_buy' %}">MarketPlace</a></li>
+            <li><a href="{%url 'micro_fin' %}"></i>Micro Finance</a></li>
+            <li><a href="logout.html"><i class="fas fa-sign-out-alt"></i></a></li>
+        </ul>
+        <div class="actions">
+            <select class="language-selector" id="language-selector">
+                <option value="en">English</option>
+                <option value="hi">हिन्दी</option>
+                <option value="te">తెలుగు</option>
+                <option value="ml">മലയാളം</option>
+                <option value="kn">ಕನ್ನಡ</option>
+                <option value="ta">தமிழ்</option>
+            </select>
+        </div>
+    </nav>
+
+    <!-- Home Page Content -->
+<div class="home">
+    <div class="slider">
+        <div class="slide">
+            <img src="{% static 'images/pic4.jpg' %}" alt="FarmEasy - Agriculture">
+            <div class="text">
+                <h2>Welcome to FarmEasy</h2>
+                <p>Your one-stop platform for affordable agricultural resources, services, and market opportunities.</p>
+            </div>
+        </div>
+        <div class="slide">
+            <img src="{% static 'images/work.jpg' %}" alt="FarmEasy - Agriculture">
+            <div class="text">
+                <h2>Empowering Farmers</h2>
+                <p>We provide the tools to grow your business and succeed.</p>
+            </div>
+        </div>
+        <div class="slide">
+            <img src="{% static 'images/pic3.jpg' %}" alt="FarmEasy - Agriculture">
+            <div class="text">
+                <h2>Connecting Communities</h2>
+                <p>Linking farmers to resources, markets, and services.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Resources Section -->
+<section class="resources">
+    <div class="resource-text">
+        <h2>Access Essential Resources</h2>
+        <div class="resource-points">
+            <div class="resource-point">
+                <i class="fas fa-seedling"></i>
+                <p>Affordable agricultural tools and equipment to boost your productivity.</p>
+            </div>
+            <div class="resource-point">
+                <i class="fas fa-leaf"></i>
+                <p>High-quality seeds and fertilizers for sustainable farming.</p>
+            </div>
+            <div class="resource-point">
+                <i class="fas fa-comments"></i>
+                <p>Expert advice from agricultural specialists to guide your journey.</p>
+            </div>
+            <div class="resource-point">
+                <i class="fas fa-shopping-cart"></i>
+                <p>Explore our marketplace for the best deals on supplies and services.</p>
+            </div>
+        </div>
+        <a href="resources.html" class="btn">Explore Resources</a>
+    </div>
+    <div class="resource-image">
+        <img src="{% static 'images/resources.jpg' %}" alt="Farm Resources">
+    </div>
+</section>
+
+<!-- How It Works Section -->
+<section class="how-it-works">
+    <div class="how-it-works-image">
+        <img src="{% static 'images/work.jpg' %}" alt="Farmer working in the field" />
+    </div>
+    <div class="how-it-works-text">
+        <h2>How It Works</h2>
+        <p>Farmers can sell all products through FarmEasy.</p>
+        <div class="how-it-works-point">
+            <i class="fas fa-user-plus"></i>
+            <div>
+                <h3>Register Your Account</h3>
+                <p>Farmers need to register their contact details to create an account.</p>
+            </div>
+        </div>
+        <div class="how-it-works-point">
+            <i class="fas fa-list-alt"></i>
+            <div>
+                <h3>Publish Listing</h3>
+                <p>Farmers can list the products through FarmEasy and publish particular produce.</p>
+            </div>
+        </div>
+        <div class="how-it-works-point">
+            <i class="fas fa-phone"></i>
+            <div>
+                <h3>Waiting for a Call</h3>
+                <p>Interested buyers can directly contact you through your available details.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Impact Section -->
+<section class="impact">
+    <h2 class="impact-title">Our Impact</h2>
+    <div class="impact-cards">
+        <div class="impact-card">
+            <img src="{% static 'images/pic3.jpg' %}" alt="Impact 1">
+            <div class="impact-card-text">
+                <h3>Increased Crop Yield</h3>
+                <p>FarmEasy has helped farmers increase their crop yields by providing them with the right tools and resources.</p>
+            </div>
+        </div>
+        <div class="impact-card">
+            <img src="{% static 'images/img2.jpg' %}" alt="Impact 2">
+            <div class="impact-card-text">
+                <h3>Better Market Access</h3>
+                <p>Our platform connects farmers directly to buyers, ensuring they get fair prices for their produce.</p>
+            </div>
+        </div>
+        <div class="impact-card">
+            <img src="{% static 'images/work.jpg' %}" alt="Impact 3">
+            <div class="impact-card-text">
+                <h3>Affordable Resources</h3>
+                <p>Farmers have access to affordable tools, seeds, and fertilizers to improve their productivity.</p>
+            </div>
+        </div>
+        <div class="impact-card">
+            <img src="{% static 'images/img4.jpg' %}" alt="Impact 4">
+            <div class="impact-card-text">
+                <h3>Community Empowerment</h3>
+                <p>We empower farmers by linking them to agricultural experts and peers for knowledge sharing.</p>
+            </div>
+        </div>
+        <div class="impact-card">
+            <img src="{% static 'images/img5.jpg' %}" alt="Impact 5">
+            <div class="impact-card-text">
+                <h3>Sustainability Initiatives</h3>
+                <p>FarmEasy promotes eco-friendly farming practices that protect the environment and ensure long-term success.</p>
+            </div>
+        </div>
+        <div class="impact-card">
+            <img src="{% static 'images/img6.jpeg' %}" alt="Impact 6">
+            <div class="impact-card-text">
+                <h3>Innovative Technology</h3>
+                <p>We introduce cutting-edge technology to help farmers optimize their production and reduce costs.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="csc-section">
+    
+    <div class="csc-content">
+      <h1 class="csc-headline">Empowering Citizens Through Common Service Centres (CSC)</h1>
+      <p class="csc-description">
+        CSCs are the backbone of India's e-Governance initiative, providing access to government and private services in rural and urban areas. They empower citizens by bridging the digital divide and ensuring easy, transparent access to services.
+      </p>
+      <div class="csc-logo">
+        <img src="{% static 'images/csc.png' %}" alt="CSC Logo">
+      </div>
+      <a href="https://csc.gov.in" class="cta-button">Learn More</a>
+    </div>
+  </div>
+  <div class="csc-overview">
+    <!-- Overview Section -->
+    <h2 class="csc-section-title">Overview of Common Service Centres (CSC)</h2>
+    <p class="csc-description">
+      Common Service Centres (CSCs) are a strategic cornerstone of India's e-Governance initiative. 
+      These centres act as access points for various Government-to-Citizen (G2C) services, bridging the digital divide in rural and urban areas. 
+      By providing citizens with essential services like Aadhaar, banking, insurance, and digital literacy, CSCs ensure equitable access to resources and simplify service delivery.
+    </p>
+  </div>
+  
+  <div class="csc-stats">
+    <!-- Key Statistics Section -->
+    
+   
+    
+    <!-- Dynamic Counters -->
+    <div class="csc-counter-grid">
+      <div class="counter-item">
+        <h3>Total Functional CSCs</h3>
+        <p><span class="counter" data-target="584103">0</span></p>
+      </div>
+      <div class="counter-item">
+        <h3>Rural CSCs</h3>
+        <p><span class="counter" data-target="463667">0</span></p>
+      </div>
+      <div class="counter-item">
+        <h3>Urban CSCs</h3>
+        <p><span class="counter" data-target="120436">0</span></p>
+      </div>
+      <div class="counter-item">
+        <h3>Total Transactions (in lakh)</h3>
+        <p><span class="counter" data-target="432.76">0</span></p>
+      </div>
+    </div>
+  
+    <!-- Call-to-Action Buttons -->
+    <div class="csc-buttons">
+      <a href="https://csc.gov.in" class="cta-button">Learn More</a>
+      <a href="#" class="cta-button secondary">Find a CSC Near You</a>
+    </div>
+  </div>
+  <!-- Chatbot Icon --><div id="chatbot-icon" ><a href="{% url 'chatbot' %}">💬</a>
+  </div>
+
+  <!-- Hidden Forum Container -->
+  <div id="forum-container">
+    <header>
+      <h2>Farmers Community Forum</h2>
+      <button id="close-forum">✖</button>
+    </header>
+
+    <section id="new-question">
+      <h3>Ask a Question</h3>
+      <form id="question-form">
+        <label for="title">Title:</label>
+        <input type="text" id="title" placeholder="Enter your question title" required>
+
+        <label for="details">Details:</label>
+        <textarea id="details" placeholder="Describe your question here" required></textarea>
+
+        <button type="submit">Post Question</button>
+      </form>
+    </section>
+
+    <section id="forum">
+      <h3>Community Questions</h3>
+      <div id="questions-container">
+        <!-- Questions will be dynamically added here -->
+      </div>
+    </section>
+  </div>
+  <!-- Footer Section -->
+<footer class="footer">
+    <div class="footer-container">
+        <div class="footer-about">
+            <h3>About FarmEasy</h3>
+            <p>FarmEasy is dedicated to empowering farmers with resources, tools, and market access to improve their productivity and livelihood.</p>
+        </div>
+        <div class="footer-links">
+            <h3>Quick Links</h3>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="advisory.html">Advisory</a></li>
+                <li><a href="sell.html">Sell</a></li>
+                <li><a href="loans.html">Microfinance</a></li>
+                <li><a href="knowledge-hub.html">Knowledge-Hub</a></li>
+            </ul>
+        </div>
+        <div class="footer-contact">
+            <h3>Contact Us</h3>
+            <p><i class="fas fa-phone"></i> +91 98765 43210</p>
+            <p><i class="fas fa-envelope"></i> support@farmeasy.com</p>
+            <p><i class="fas fa-map-marker-alt"></i> 123 FarmEasy Lane, Agro City, India</p>
+        </div>
+        <div class="footer-social">
+            <h3>Follow Us</h3>
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2024 FarmEasy. All rights reserved.</p>
+    </div>
+</footer>
+
+
+
+    <script>
+        let currentIndex = 0;
+const slides = document.querySelectorAll('.slide');
+const totalSlides = slides.length;
+
+function showNextSlide() {
+    currentIndex = (currentIndex + 1) % totalSlides;
+    updateSlides();
+}
+
+function updateSlides() {
+    slides.forEach((slide, index) => {
+        slide.style.transform = `translateX(${(index - currentIndex) * 100}%)`;
+    });
+}
+
+setInterval(showNextSlide, 3000); // Change the slide every 3 seconds
+document.addEventListener("DOMContentLoaded", () => {
+    const counters = document.querySelectorAll(".counter");
+  
+    counters.forEach(counter => {
+      const updateCount = () => {
+        const target = +counter.getAttribute("data-target"); // Convert to number
+        const current = +counter.innerText; // Convert to number
+        const increment = target / 200; // Adjust speed by changing the divisor
+  
+        if (current < target) {
+          counter.innerText = Math.ceil(current + increment);
+          setTimeout(updateCount, 10); // Update every 10ms
+        } else {
+          counter.innerText = target; // Ensure exact number
+        }
+      };
+  
+      updateCount();
+    });
+  });
+  document.addEventListener('DOMContentLoaded', function () {
+    // Select the elements
+    const chatbotIcon = document.getElementById('chatbot-icon');
+    const forumContainer = document.getElementById('forum-container');
+    const closeForumButton = document.getElementById('close-forum');
+  
+    // Function to toggle the visibility of the forum
+    function toggleForum() {
+      if (forumContainer.style.display === 'none' || forumContainer.style.display === '') {
+        forumContainer.style.display = 'flex';  // Show the forum
+      } else {
+        forumContainer.style.display = 'none';  // Hide the forum
+      }
+    }
+  
+    // Add event listener to the chatbot icon to open/close the forum
+    chatbotIcon.addEventListener('click', toggleForum);
+  
+    // Add event listener to the close button to close the forum
+    closeForumButton.addEventListener('click', function () {
+      forumContainer.style.display = 'none';  // Hide the forum when close button is clicked
+    });
+  
+    // Function to handle question form submission
+    document.getElementById('question-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+  
+      const title = document.getElementById('title').value;
+      const details = document.getElementById('details').value;
+  
+      if (title && details) {
+        // Create a new question element
+        const questionContainer = document.createElement('div');
+        questionContainer.classList.add('question');
+  
+        questionContainer.innerHTML = `
+          <h3>${title}</h3>
+          <p>${details}</p>
+  
+          <!-- Answers Section -->
+          <div class="answers">
+            <h4>Answers</h4>
+            <div class="answer-list">
+              <!-- Answers will be added here dynamically -->
+            </div>
+            <form class="answer-form">
+              <input type="text" placeholder="Write your answer..." required>
+              <button type="submit">Post Answer</button>
+            </form>
+          </div>
+        `;
+  
+        // Enable answering functionality for the new question
+        enableAnswering(questionContainer);
+  
+        // Add the new question to the forum
+        document.getElementById('questions-container').appendChild(questionContainer);
+  
+        // Clear the form inputs
+        document.getElementById('title').value = '';
+        document.getElementById('details').value = '';
+      }
+    });
+  
+    // Function to enable answering functionality for a given question container
+    function enableAnswering(questionContainer) {
+      const answerForm = questionContainer.querySelector('.answer-form');
+      const answerList = questionContainer.querySelector('.answer-list');
+  
+      answerForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+  
+        const answerInput = answerForm.querySelector('input');
+        const answerText = answerInput.value;
+  
+        if (answerText) {
+          // Add the answer to the answer list
+          const answer = document.createElement('div');
+          answer.classList.add('answer');
+          answer.textContent = answerText;
+          answerList.appendChild(answer);
+  
+          // Clear the input
+          answerInput.value = '';
+        }
+      });
+    }
+  
+    // Enable answering for any pre-existing static question in the HTML
+    document.querySelectorAll('.question').forEach(enableAnswering);
+  });
+  document.addEventListener("DOMContentLoaded", () => {
+    const languageSelector = document.getElementById("language-selector");
+
+    // Pre-defined translations
+    const translations = {
+        en: {
+            home: "Home",
+            advisory: "Advisory",
+            sell: "Sell",
+            microfinance: "Microfinance",
+            knowledgeHub: "Knowledge Hub",
+            logOut: "Log Out",
+            welcomeTitle: "Welcome to FarmEasy",
+            welcomeDescription: "Your one-stop platform for affordable agricultural resources, services, and market opportunities.",
+            empoweringTitle: "Empowering Farmers",
+            empoweringDescription: "We provide the tools to grow your business and succeed.",
+            connectingTitle: "Connecting Communities",
+            connectingDescription: "Linking farmers to resources, markets, and services.",
+            swiperCards: [
+                "Crop Advisory: Get expert advice on crop care and yield improvement.",
+                "Sell Your Produce: Connect with buyers and get fair prices for your harvest.",
+                "Microfinance Options: Access small loans to fund your agricultural needs.",
+            ],
+        },
+        hi: {
+            home: "होम",
+            advisory: "सलाह",
+            sell: "बेचना",
+            microfinance: "सूक्ष्म वित्त",
+            knowledgeHub: "ज्ञान केंद्र",
+            logOut: "लॉग आउट",
+            welcomeTitle: "फार्मईज़ी में आपका स्वागत है",
+            welcomeDescription: "किफायती कृषि संसाधनों, सेवाओं और बाजार के अवसरों के लिए आपका एकमात्र मंच।",
+            empoweringTitle: "किसानों को सशक्त बनाना",
+            empoweringDescription: "हम आपके व्यवसाय को बढ़ाने और सफल होने के लिए उपकरण प्रदान करते हैं।",
+            connectingTitle: "समुदायों को जोड़ना",
+            connectingDescription: "किसानों को संसाधनों, बाजारों और सेवाओं से जोड़ना।",
+            swiperCards: [
+                "फसल सलाह: फसल देखभाल और उपज सुधार पर विशेषज्ञ सलाह प्राप्त करें।",
+                "अपना उत्पाद बेचें: खरीदारों से जुड़ें और अपनी फसल के लिए उचित मूल्य प्राप्त करें।",
+                "सूक्ष्म वित्त विकल्प: अपने कृषि आवश्यकताओं को पूरा करने के लिए छोटे ऋण तक पहुँचें।",
+            ],
+        },
+        te: {
+            home: "హోమ్",
+            advisory: "సర్వోత్తమ ఎరువుల అంచనా",
+            sell: "అమ్మకం",
+            microfinance: "మైక్రోఫైనాన్స్",
+            knowledgeHub: "నాలెడ్జ్-హబ్",
+            logOut: "లాగ్ అవుట్",
+            welcomeTitle: "ఫార్మ్ ఈజీకి స్వాగతం",
+            welcomeDescription: "తక్కువ ఖర్చుతో వ్యవసాయ వనరులు, सेवలు, మరియు మార్కెట్ అవకాశాలకు మీ స్టాప్.",
+            empoweringTitle: "వ్యవసాయ కార్మికులను శక్తివంతం చేయడం",
+            empoweringDescription: "మీ వ్యాపారాన్ని పెంచడానికి మరియు విజయవంతంగా ఉండటానికి మేము الأدوات فراہم చేస్తాము.",
+            connectingTitle: "సమూహాలను అనుసంధానం",
+            connectingDescription: "వ్యవసాయ కార్మికులను వనరులు, మార్కెట్లు, మరియు సేవలతో అనుసంధానం చేయడం.",
+            swiperCards: [
+                "పంట సలహాలు: పంట సంరక్షణ మరియు దిగుబడి మెరుగుదలకు నిపుణుల సలహా పొందండి.",
+                "మీ ఉత్పత్తిని అమ్మండి: కొనుగోలుదారులతో కనెక్ట్ అవ్వండి మరియు మీ దిగుబడికి న్యాయమైన ధర పొందండి.",
+                "మైక్రోఫైనాన్స్ ఎంపికలు: మీ వ్యవసాయ అవసరాలను నెరవేర్చడానికి చిన్న రుణాలు పొందండి.",
+            ],
+        },
+        ml: {
+            home: "ഹോം",
+            advisory: "ഉപദേശം",
+            sell: "വിൽക്കുക",
+            microfinance: "മൈക്രോഫിനാൻസ്",
+            knowledgeHub: "നോളജ്-ഹബ്",
+            logOut: "ലോഗ് ഔട്ട്",
+            welcomeTitle: "ഫാംഈസിയിൽ സ്വാഗതം",
+            welcomeDescription: "ലഭ്യമായ കാർഷിക വിഭവങ്ങൾ, സേവനങ്ങൾ, വിപണി അവസരങ്ങൾ എന്നിവയ്ക്കുള്ള നിങ്ങളുടെ ഏകതാനമായ പ്ലാറ്റ്‌ഫോം.",
+            empoweringTitle: "കർഷകരെ ശക്തിപ്പെടുത്തുന്നു",
+            empoweringDescription: "നിങ്ങളുടെ ബിസിനസ്സ് വളരാൻ സഹായിക്കുന്ന ഉപകരണങ്ങൾ നാം നൽകുന്നു.",
+            connectingTitle: "സമൂഹങ്ങളെ ബന്ധിപ്പിക്കുന്നു",
+            connectingDescription: "കർഷകങ്ങളെ വിഭവങ്ങൾ, വിപണികൾ, സേവനങ്ങൾ എന്നിവയുമായി ബന്ധിപ്പിക്കുന്നു.",
+            swiperCards: [
+                "വിള ഉപദേശം: വിള സംരക്ഷണത്തിനും വിളവ് മെച്ചപ്പെടുത്തലിനും വിദഗ്ധരുടെ ഉപദേശം നേടുക.",
+                "നിങ്ങളുടെ വിളകൾ വിൽക്കുക: വാങ്ങിയവരുമായി ബന്ധപ്പെടുകയും നിങ്ങളുടെ വിളക്ക് ന്യായമായ വില നേടുകയും ചെയ്യുക.",
+                "മൈക്രോഫിനാൻസ് ഓപ്ഷനുകൾ: നിങ്ങളുടെ കാർഷിക ആവശ്യങ്ങൾക്കായി ചെറിയ വായ്പകൾ ലഭ്യമാക്കുക.",
+            ],
+        },
+        kn: {
+            home: "ಮುಖಪುಟ",
+            advisory: "ಸಲಹೆ",
+            sell: "ಮಾರಾಟ",
+            microfinance: "ಮೈಕ್ರೋಫೈನಾನ್ಸ್",
+            knowledgeHub: "ನಾಲೆಜ್-ಹಬ್",
+            logOut: "ಲಾಗ್ ಔಟ್",
+            welcomeTitle: "ಫಾರ್ಮ್ ಈಜಿಗೆ ಸ್ವಾಗತ",
+            welcomeDescription: "ಸಲುವಾಗಿರುವ ಕೃಷಿ ಸಂಪತ್ತು, ಸೇವೆ ಮತ್ತು ಮಾರುಕಟ್ಟೆ ಅವಕಾಶಗಳಿಗೆ ನಿಮ್ಮ ಒಂದು ನಿಲುಗಡೆ.",
+            empoweringTitle: "ಕೃಷಿಕರನ್ನು ಶಕ್ತಿವಂತಗೊಳಿಸುವುದು",
+            empoweringDescription: "ನಾವು ನಿಮ್ಮ ವ್ಯಾಪಾರವನ್ನು ಬೆಳಸಲು ಮತ್ತು ಯಶಸ್ವಿಯಾಗಲು ಸಾಧನಗಳನ್ನು ಒದಗಿಸುತ್ತೇವೆ.",
+            connectingTitle: "ಸಮುದಾಯಗಳನ್ನು ಸಂಪರ್ಕಿಸುವುದು",
+            connectingDescription: "ಕೃಷಿಕರನ್ನು ಸಂಪನ್ಮೂಲಗಳು, ಮಾರುಕಟ್ಟೆಗಳು ಮತ್ತು ಸೇವೆಗಳು ಮತ್ತು ಸೇವೆಗಳೊಂದಿಗೆ ಸಂಪರ್ಕಿಸುತ್ತದೆ.",
+            swiperCards: [
+                "ಬೆಳೆ ಸಲಹೆ: ಬೆಳೆ ಆರೈಕೆ ಮತ್ತು ಫಲಿತಾಂಶ ಸುಧಾರಣೆಯ ಬಗ್ಗೆ ತಜ್ಞರ ಸಲಹೆ ಪಡೆಯಿರಿ.",
+                "ನಿಮ್ಮ ಉತ್ಪನ್ನವನ್ನು ಮಾರಾಟ ಮಾಡಿ: ಖರೀದಿದಾರರೊಂದಿಗೆ ಸಂಪರ್ಕ ಸಾಧಿಸಿ ಮತ್ತು ನಿಮ್ಮ ಬೆಳೆಗಳಿಗೆ ನ್ಯಾಯಯುತ ಬೆಲೆ ಪಡೆಯಿರಿ.",
+                "ಮೈಕ್ರೋಫೈನಾನ್ಸ್ ಆಯ್ಕೆಗಳು: ನಿಮ್ಮ ಕೃಷಿ ಅಗತ್ಯಗಳಿಗೆ ಸಣ್ಣ ಸಾಲಗಳನ್ನು ಪಡೆಯಿರಿ.",
+            ],
+        },
+        ta: {
+            home: "முகப்பு",
+            advisory: "ஆலோசனை",
+            sell: "விற்பனை",
+            microfinance: "சிறு நிதி",
+            knowledgeHub: "நோலஜ்-ஹப்",
+            logOut: "வெளியேறு",
+            welcomeTitle: "பார்மீசியில் வரவேற்கிறோம்",
+            welcomeDescription: "குறைந்த செலவில் வேளாண் வளங்கள், சேவைகள், சந்தை வாய்ப்புகளுக்கான உங்கள் ஒரே இடம்.",
+            empoweringTitle: "சிறுபிரிவுகளுக்கு வலிமை அளித்தல்",
+            empoweringDescription: "எங்கள் பரிசோதனை உங்களுக்கு சிறந்த பங்குதாரர் அனுபவத்தை அளிக்கிறது.",
+            connectingTitle: "சமூகங்களை இணைக்கின்றது",
+            connectingDescription: "வேளாண் சமூகங்களை மாறும் சேவைகள் மற்றும் பயனுள்ள விகிதங்கள் ",
+            swiperCards: [
+                "பயிர் ஆலோசனை: பயிர் பராமரிப்பு மற்றும் மகசூல் மேம்பாட்டிற்கான நிபுணர் ஆலோசனையைப் பெறுங்கள்.",
+                "உங்கள் விளைபொருட்களை விற்கவும்: வாங்குபவர்களுடன் இணைக்கவும் மற்றும் உங்கள் விளைவிற்கான நியாயமான விலையைப் பெறுங்கள்.",
+                "சிறு நிதி விருப்பங்கள்: உங்கள் வேளாண் தேவைகளுக்காக சிறிய கடன்களை அணுகவும்.",
+            ],
+        },
+    };
+
+    // Function to update text content based on selected language
+    function translatePage(language) {
+        // Translate navbar items
+        document.querySelector("a[href='index.html']").textContent = translations[language].home;
+        document.querySelector("a[href='advisory.html']").textContent = translations[language].advisory;
+        document.querySelector("a[href='sell.html']").textContent = translations[language].sell;
+        document.querySelector("a[href='loans.html']").textContent = translations[language].microfinance;
+        document.querySelector("a[href='knowledge-hub.html']").textContent = translations[language].knowledgeHub;
+        document.querySelector("a[href='logout.html']").innerHTML = `<i class="fas fa-sign-out-alt"></i> ${translations[language].logOut}`;
+
+        // Translate slider text
+        document.querySelector(".slider .slide:nth-child(1) .text h2").textContent = translations[language].welcomeTitle;
+        document.querySelector(".slider .slide:nth-child(1) .text p").textContent = translations[language].welcomeDescription;
+
+        document.querySelector(".slider .slide:nth-child(2) .text h2").textContent = translations[language].empoweringTitle;
+        document.querySelector(".slider .slide:nth-child(2) .text p").textContent = translations[language].empoweringDescription;
+
+        document.querySelector(".slider .slide:nth-child(3) .text h2").textContent = translations[language].connectingTitle;
+        document.querySelector(".slider .slide:nth-child(3) .text p").textContent = translations[language].connectingDescription;
+
+        // Translate Swiper cards
+        const swiperCards = translations[language].swiperCards;
+        const swiperCardElements = document.querySelectorAll('.swiper .swiper-slide');
+        swiperCardElements.forEach((card, index) => {
+            card.querySelector('h3').textContent = swiperCards[index].split(':')[0]; // Title
+            card.querySelector('p').textContent = swiperCards[index].split(':')[1]; // Description
+        });
+    }
+
+    // Event listener for language selection
+    languageSelector.addEventListener("change", (event) => {
+        const selectedLanguage = event.target.value;
+        translatePage(selectedLanguage);
+    });
+
+    // Initialize the page with default language
+    translatePage("en");
+});
+
+    </script>
+</body>
+</html>

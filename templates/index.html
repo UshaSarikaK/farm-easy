@@ -1,0 +1,162 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FarmEasy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&family=Open+Sans:wght@400&family=Montserrat:wght@400&display=swap" rel="stylesheet">
+    <style>
+        /* General Styles */
+        body {
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            background-image: url('{% static "images/bgimage.png" %}');
+            background-size: cover;
+            background-position: center;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .main-content {
+            text-align: center;
+            color: rgb(0, 0, 0);
+        }
+
+        .options-container {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+        }
+
+        .option-image {
+            width: 150px;
+            height: 150px;
+            cursor: pointer;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .option-image:hover {
+            transform: scale(1.1);
+        }
+
+        .login-panel {
+            display: none;
+            margin-top: 20px;
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            width: 90%;
+            max-width: 400px;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .login-panel input {
+            display: block;
+            margin: 10px auto;
+            padding: 10px;
+            width: 90%;
+            max-width: 300px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .login-panel button {
+            padding: 10px 20px;
+            background-color: #3a6ea5;
+            color: rgb(0, 0, 0);
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .login-panel button:hover {
+            background-color: #2c5282;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-content">
+        <h1>Choose Your Role</h1>
+        <div class="options-container" id="options-container">
+            <img src="{% static 'images/farmer.png' %}" alt="Farmer" class="option-image" id="farmer-icon" onclick="showLogin('farmer')">
+            <img src="{% static 'images/tourist.png' %}" alt="Tourist" class="option-image" id="tourist-icon" onclick="showLogin('tourist')">
+        </div>
+        <div class="login-panel" id="farmer-login">
+            <h2>Farmer Login</h2>
+            <input type="text" id="farmer-username" placeholder="Username">
+            <input type="password" id="farmer-password" placeholder="Password">
+            <button onclick="login('farmer')">Login</button>
+        </div>
+        <div class="login-panel" id="tourist-login">
+            <h2>Tourist Login</h2>
+            <input type="text" id="tourist-username" placeholder="Username">
+            <input type="password" id="tourist-password" placeholder="Password">
+            <button onclick="login('tourist')">Login</button>
+        </div>
+    </div>
+
+    <script>
+        function showLogin(role) {
+            // Hide the options container
+            document.getElementById('options-container').style.display = 'none';
+
+            // Show the corresponding login panel
+            if (role === 'farmer') {
+                document.getElementById('farmer-login').style.display = 'block';
+            } else if (role === 'tourist') {
+                document.getElementById('tourist-login').style.display = 'block';
+            }
+        }
+
+        function login(role) {
+            // Farmer credentials
+            const farmerUsername = 'farmer123';
+            const farmerPassword = 'farm@123';
+
+            // Tourist credentials
+            const touristUsername = 'tourist123';
+            const touristPassword = 'tour@123';
+
+            if (role === 'farmer') {
+                const username = document.getElementById('farmer-username').value;
+                const password = document.getElementById('farmer-password').value;
+
+                if (username === farmerUsername && password === farmerPassword) {
+                    window.location.href = 'farmer';
+                } else {
+                    alert('Incorrect Farmer credentials!');
+                }
+            } else if (role === 'tourist') {
+                const username = document.getElementById('tourist-username').value;
+                const password = document.getElementById('tourist-password').value;
+
+                if (username === touristUsername && password === touristPassword) {
+                    window.location.href = 'tourist';
+                } else {
+                    alert('Incorrect Tourist credentials!');
+                }
+            }
+        }
+    </script>
+</body>
+</html>

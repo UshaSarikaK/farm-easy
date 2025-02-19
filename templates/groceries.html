@@ -1,0 +1,559 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FarmEasy - All Categories</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* General styling */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #16423C;
+            padding: 20px 40px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .navbar .logo h1 {
+            color: white;
+            font-size: 24px;
+            font-family: 'Lora', serif;
+        }
+
+        .navbar .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+
+        .navbar .nav-links li a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            padding: 8px 15px;
+            transition: 0.3s;
+        }
+
+        .navbar .nav-links li a:hover {
+            border-bottom: 3px solid #FFC700;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navigation {
+            text-align: center;
+            margin: 20px 0;
+            margin-top: 150px;
+        }
+
+        .navigation a {
+            margin: 0 15px;
+            text-decoration: none;
+            color: #28a745;
+            font-size: 18px;
+            padding: 10px 15px;
+            border-radius: 5px;
+            border: 2px solid transparent;
+        }
+
+        .navigation a.active {
+            border: 2px solid #28a745;
+            color: #218838;
+        }
+
+        .category {
+            padding: 20px;
+        }
+
+        .category h2 {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* 3 products per row */
+            gap: 20px; /* Space between grid items */
+            padding: 20px;
+        }
+        
+
+        .product-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .product-item img {
+            width: 200px;
+            height: 200px;
+            object-fit: contain;
+            margin-bottom: 10px;
+        }
+
+        .product-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .product-content h4 {
+            margin: 10px 0;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .product-content p {
+            margin: 5px 0;
+            font-size: 16px;
+            color: #28a745;
+        }
+
+        .product-content button {
+            margin-top: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .product-content button:hover {
+            background-color: #218838;
+        }
+        .cart-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            padding: 15px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            font-size: 24px;
+            z-index: 1000;
+        }
+
+        .cart-button:hover {
+            background-color: #218838;
+        }
+
+        .cart-dropdown {
+            display: none;
+            position: absolute;
+            bottom: 60px; /* Adjust to appear above the button */
+            right: 0;
+            width: 250px;
+            background-color: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            padding: 10px;
+            border-radius: 8px;
+            z-index: 1001;
+        }
+
+        .cart-dropdown h4 {
+            margin: 0 0 10px;
+            font-size: 18px;
+        }
+
+        .cart-items {
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .cart-total {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .cart-notification {
+            position: fixed;
+            top: 10px;
+            right: 20px;
+            background-color: #28a745;
+            color: white;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 999;
+            display: none; /* Initially hidden */
+        }
+
+        .cart-notification p {
+            margin: 0;
+            font-size: 14px;
+        }
+
+        .remove-item {
+            color: red;
+            cursor: pointer;
+            margin-left: 10px;
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+            .cart-button {
+                bottom: 10px; /* Adjust for smaller screens */
+                right: 10px; /* Move icon further into the screen */
+            }
+
+            .cart-dropdown {
+                right: 10px; /* Adjust dropdown position */
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <h1>FarmEasy For Tourists</h1>
+        </div>
+        <ul class="nav-links">
+            <li><a href="{% url 'tourist' %}">Home</a></li>
+            <li><a href="{% url 'tourist_centres' %}">Agriculture Centres</a></li>
+            <li><a href="{% url 'tourist_buy' %}">MarketPlace</a></li>
+            <li><a href="{% url 'garden' %}">Gardening Tips</a></li>
+            <li><a href="">Hello,tourist123</a></li>
+        </ul>
+    </nav>
+    <nav class="navigation">
+        <a href="#fruits" class="active">Fruits</a>
+        <a href="#grains">Grains</a>
+        <a href="#vegetables">Vegetables</a>
+    </nav>
+
+    <div id="fruits" class="category">
+        <h2>Fruits</h2>
+        <div class="product-grid">
+            <!-- Add your fruit products here -->
+            <div class="product-item">
+                <img src="{% static 'images/apple.jpg' %}" alt="Apple">
+                <div class="product-content">
+                    <h4>Apple</h4>
+                    <p>₹150 per kg</p>
+                    <button onclick="addToCart('Apple', 150)">Add to Cart</button>
+                </div>
+            </div>
+            <div class="product-item">
+                    <img src="{% static 'images/dragon.jpg' %}" alt="Dragon">
+                    <div class="product-content">
+                        <h4>Dragon</h4>
+                        <p>₹50</p>
+                        <button onclick="addToCart('Dragon', 50)">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="product-item">
+                    <img src="{% static 'images/grapes.jpg' %}" alt="Grapes">
+                    <div class="product-content">
+                        <h4>Grapes</h4>
+                        <p>₹80 per kg</p>
+                        <button onclick="addToCart('Grapes', 80)">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="product-item">
+                    <img src="{% static 'images/sapota.jpg' %}" alt="Sapota">
+                    <div class="product-content">
+                        <h4>Sapota</h4>
+                        <p>₹90 per kg</p>
+                        <button onclick="addToCart('Sapota', 90)">Add to Cart</button>
+                    </div>
+                </div>
+                <div class="product-item">
+                    <img src="{% static 'images/promo.jpg' %}" alt="Promogranate">
+                    <div class="product-content">
+                        <h4>Promogranate</h4>
+                        <p>₹130 per kg</p>
+                        <button onclick="addToCart('Promogranate', 130)">Add to Cart</button>                
+                    </div>
+                </div>
+                <div class="product-item">
+                    <img src="{% static 'images/orange.jpg' %}" alt="Orange">
+                    <div class="product-content">
+                        <h4>Orange</h4>
+                        <p>₹100 per kq</p>
+                        <button class="add-to-cart" onclick="addToCart('Orange', 100)">Add to Cart</button>
+                    </div>                 
+                </div>
+                <div class="product-item">
+                    <img src="{% static 'images/gau.jpg' %}" alt="Guava">
+                    <div class="product-content">
+                        <h4>Guava</h4>
+                        <p>₹70 per kq</p>
+                        <button class="add-to-cart" onclick="addToCart('Orange', 100)">Add to Cart</button>
+                    </div>                 
+                </div>
+                <div class="product-item">
+                    <img src="{% static 'images/sweet.jpg' %}" alt="Sweet Potato">
+                    <div class="product-content">
+                        <h4>Sweet Potato</h4>
+                        <p>₹110 per kq</p>
+                        <button class="add-to-cart" onclick="addToCart('Swwet Potato', 110)">Add to Cart</button>
+                    </div>                 
+                </div>
+        </div>
+    </div>
+
+    <div id="grains" class="category">
+        <h2>Grains</h2>
+        <div class="product-grid">
+            <div class="product-item">
+                <img src="{% static 'images/amaranth.jpg' %}" alt="Amaranth">
+                <div class="product-content">
+                    <h4>Amaranth</h4>
+                    <p>₹120 per kg</p>
+                    <button onclick="addToCart('Amaranth',120)">Add to Cart</button>                    
+                </div>
+            </div>
+            <div class="product-item">
+                <img src="{% static 'images/bajra.jpg' %}" alt="Bajra">
+                <div class="product-content">
+                    <h4>Bajra</h4>
+                    <p>₹95 per kg</p>
+                    <button onclick="addToCart('Bajra', 95)">Add to Cart</button>
+                </div>
+            </div>
+            <div class="product-item">
+                <img src="{% static 'images/barley.jpg' %}" alt="Barley">
+                <div class="product-content">
+                    <h4>Barley</h4>
+                    <p>₹85 per kg</p>
+                    <button onclick="addToCart('Barley', 85)">Add to Cart</button>
+                </div>
+            </div>
+            <div class="product-item">
+                <img src="{% static 'images/bengal.jpg' %}" alt="Bengalgram">
+                <div class="product-content">
+                    <h4>Bengalgram</h4>
+                    <p>₹110 per kg</p>
+                    <button onclick="addToCart('Bengalgram', 110)">Add to Cart</button>                
+                </div>
+            </div>
+            <div class="product-item">
+                <img src="{% static 'images/brown.jpg' %}" alt="Brown Rice">
+                <div class="product-content">
+                    <h4>Brown Rice</h4>
+                    <p>₹130 per kg</p>
+                    <button class="add-to-cart" onclick="addToCart('Brown Rice', 130)">Add to Cart</button>
+                </div>                 
+            </div>
+            <div class="product-item">
+                <img src="{% static 'images/faro.jpg' %}" alt="Faro Seeds">
+                <div class="product-content">
+                    <h4>Faro Seeds</h4>
+                    <p>₹79 per kg</p>
+                    <button class="add-to-cart" onclick="addToCart('Faro Seeds', 79)">Add to Cart</button>
+                </div>                 
+            </div>
+            <div class="product-item">
+                <img src="{% static 'images/groundnut.jpg' %}" alt="GroundNut">
+                <div class="product-content">
+                    <h4>GroundNut</h4>
+                    <p>₹110 per kg</p>
+                    <button class="add-to-cart" onclick="addToCart('GrounNut', 110)">Add to Cart</button>
+                </div>                 
+            </div>
+            <div class="product-item">
+                <img src="{% static 'images/jowar.jpg' %}" alt="Jowar">
+                <div class="product-content">
+                    <h4>Jowar</h4>
+                    <p>₹90 per kg</p>
+                    <button class="add-to-cart" onclick="addToCart('Jowar', 90)">Add to Cart</button>
+                </div>                 
+        </div>
+    </div>
+
+    <div id="vegetables" class="category">
+        <h2>Vegetables</h2>
+        <div class="product-grid">
+            <div class="product-item">
+                <img src="{% static 'images/tomato.jpg' %}" alt="Tomato">
+                <div class="product-content">
+                    <h4>Tomato</h4>
+                    <p>₹30 per kg</p>
+                    <button onclick="window.location.href='book-now-page.html'">Book Now</button>
+                </div>
+            </div>
+            <div class="product-item">
+                <img src="{% static 'images/beans.jpg' %}" alt="Beans">
+                <div class="product-content">
+                    <h4>Beans</h4>
+                    <p>₹65 per kg</p>
+                    <button onclick="addToCart('Beans', 65)">Add to Cart</button>                    
+                </div>
+            </div>
+            <div class="product-item">
+                <img src="{% static 'images/beet.jpg' %}" alt="Beetroot">
+                <div class="product-content">
+                    <h4>Beetroot</h4>
+                    <p>₹55 per kg</p>
+                    <button onclick="addToCart('Beetroot', 55)">Add to Cart</button>
+                </div>
+            </div>
+            <div class="product-item">
+                <img src="{% static 'images/bottle.jpg' %}" alt="Bottlegourd">
+                <div class="product-content">
+                    <h4>Bottlegourd</h4>
+                    <p>₹50 per kg</p>
+                    <button onclick="addToCart('Bottlegourd', 50)">Add to Cart</button>
+                </div>
+            </div>
+            <div class="product-item">
+                <img src="{% static 'images/bringal.jpg' %}" alt="Bringal">
+                <div class="product-content">
+                    <h4>Bringal</h4>
+                    <p>₹40 per kg</p>
+                    <button onclick="addToCart('Bringal', 40)">Add to Cart</button>                
+                </div>
+            </div>
+            <div class="product-item">
+                <img src="{% static 'images/cabbage.jpg' %}" alt="Cabbage">
+                <div class="product-content">
+                    <h4>Cabbage</h4>
+                    <p>₹50 per kg</p>
+                    <button class="add-to-cart" onclick="addToCart('Cabbage', 50)">Add to Cart</button>
+                </div>                 
+            </div>
+            <div class="product-item">
+                <img src="{% static 'images/capsi.jpg' %}" alt="Capsicum">
+                <div class="product-content">
+                    <h4>Capsicum</h4>
+                    <p>₹45 per kg</p>
+                    <button class="add-to-cart" onclick="addToCart('Capsicum', 45)">Add to Cart</button>
+                </div>                 
+            </div>
+            <div class="product-item">
+                <img src="{% static 'images/cauli.jpg' %}" alt="CauliFlower">
+                <div class="product-content">
+                    <h4>CauliFlowerCabbage</h4>
+                    <p>₹35 per kg</p>
+                    <button class="add-to-cart" onclick="addToCart('CauliFlower', 35)">Add to Cart</button>
+                </div>                 
+            </div>
+            <div class="product-item">
+                <img src="{% static 'images/chilli.jpg' %}" alt="Chilli">
+                <div class="product-content">
+                    <h4>Chilli</h4>
+                    <p>₹40 per kg</p>
+                    <button class="add-to-cart" onclick="addToCart('Chhili', 40)">Add to Cart</button>
+                </div>                 
+            </div>
+            <div class="product-item">
+                <img src="{% static 'images/potato.jpg' %}" alt="Potato">
+                <div class="product-content">
+                    <h4>Potato</h4>
+                    <p>₹35 per kg</p>
+                    <button class="add-to-cart" onclick="addToCart('Potato', 35)">Add to Cart</button>
+                </div>                 
+            </div>
+            <div class="product-item">
+                <img src="{% static 'images/ladi.jpg' %}" alt="Lady's Finger">
+                <div class="product-content">
+                    <h4>Lady's Finger</h4>
+                    <p>₹45 per kg</p>
+                    <button onclick="addToCart('LadyFinger', 45)">Add to Cart</button>
+                </div>
+            </div>
+            <div class="product-item">
+                <img src="{% static 'images/rich.jpg' %}" alt="Ridge Gourd">
+                <div class="product-content">
+                    <h4>Ridge Gourd</h4>
+                    <p>₹40 per kg</p>
+                    <button onclick="addToCart('Ridge Gourd', 40)">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button class="cart-button" onclick="toggleCart()">
+        <i class="fas fa-shopping-cart"></i>
+    </button>
+
+    <div class="cart-dropdown" id="cartDropdown">
+        <h4>Cart Items</h4>
+        <div class="cart-items" id="cartItems"></div>
+        <div class="cart-total" id="cartTotal">Total: ₹0</div>
+    </div>
+
+    <div class="cart-notification" id="cartNotification">
+        <p>Item added to cart!</p>
+    </div>
+
+<script>
+        let cart = [];
+        let cartDropdown = document.getElementById('cartDropdown');
+        let cartItemsContainer = document.getElementById('cartItems');
+        let cartTotal = document.getElementById('cartTotal');
+        let cartNotification = document.getElementById('cartNotification');
+
+        function addToCart(itemName, itemPrice) {
+            const existingItem = cart.find(item => item.name === itemName);
+            if (existingItem) {
+                existingItem.quantity++;
+            } else {
+                cart.push({ name: itemName, price: itemPrice, quantity: 1 });
+            }
+
+            updateCart();
+            showNotification();
+        }
+
+        function removeFromCart(itemName) {
+            const itemIndex = cart.findIndex(item => item.name === itemName);
+            if (itemIndex > -1) {
+                cart.splice(itemIndex, 1);
+            }
+            updateCart();
+        }
+
+        function updateCart() {
+            cartItemsContainer.innerHTML = '';
+            let totalAmount = 0;
+
+            cart.forEach(item => {
+                totalAmount += item.price * item.quantity;
+                cartItemsContainer.innerHTML += `
+                    <p>${item.name} - ₹${item.price} x ${item.quantity} <span class="remove-item" onclick="removeFromCart('${item.name}')">Remove</span></p>
+                `;
+            });
+
+            cartTotal.textContent = `Total: ₹${totalAmount}`;
+        }
+
+        function toggleCart() {
+            if (cartDropdown.style.display === 'block') {
+                cartDropdown.style.display = 'none';
+            } else {
+                cartDropdown.style.display = 'block';
+            }
+        }
+
+        function showNotification() {
+            cartNotification.style.display = 'block';
+            setTimeout(() => {
+                cartNotification.style.display = 'none';
+            }, 2000);
+        }
+    </script>
+</body>
+</html>

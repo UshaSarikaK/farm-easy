@@ -1,0 +1,254 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FarmEasy</title>
+    <!-- Include Font Awesome for icons -->
+    <!-- Include Font Awesome -->
+     <link rel="stylesheet" href="{% static 'css/resources.css' %}">
+     
+</head>
+<body>
+    <!-- Navbar -->
+    {% include 'navbar.html' %}
+    
+    <div id="knowledge-hub-hero">
+        <div class="container text-center">
+            <h1 class="display-3 text-white">Knowledge Hub</h1>
+        </div>
+    </div>
+     <div class="container mt-5">
+        <div class="section">
+            <section id="grow-smarter" class="py-5" style="background-color: #f4f7f8;">
+                <div class="container">
+                    <h2 class="text-center">Grow Smarter, Farm Better</h2>
+                    <p class="text-center mb-5">Unlock crop-specific guides, seasonal tips, and innovative farming techniques to boost your yield.</p>
+            
+                    <div class="row">
+                        <!-- Crop-Specific Guides Card -->
+                        <!-- Crop-Specific Guides Card -->
+<div class="col-md-4 mb-4">
+    <div class="card shadow-sm">
+        <img src="{% static 'images/r2.jpg' %}" class="card-img-top" alt="Crop-Specific Guides">
+        <div class="card-body">
+            <h5 class="card-title">Crop-Specific Guides</h5>
+            <p class="card-text">Detailed guides to grow specific crops and learn which crops are ideal for your region.</p>
+            <a href="#" class="btn btn-primary">Learn More</a>
+        </div>
+    </div>
+</div>
+
+<!-- Innovative Farming Techniques Card -->
+<div class="col-md-4 mb-4">
+    <div class="card shadow-sm">
+        <img src="{% static 'images/r3.jpg' %}" class="card-img-top" alt="Innovative Farming Techniques">
+        <div class="card-body">
+            <h5 class="card-title">Innovative Farming Techniques</h5>
+            <p class="card-text">Stay ahead with the latest farming technologies like drone monitoring and smart irrigation.</p>
+            <a href="#" class="btn btn-primary">Explore Techniques</a>
+        </div>
+    </div>
+</div>
+
+<!-- Seasonal Tips for Better Yields Card -->
+<div class="col-md-4 mb-4">
+    <div class="card shadow-sm">
+        <img src="{% static 'images/r4.jpeg' %}" class="card-img-top" alt="Seasonal Tips">
+        <div class="card-body">
+            <h5 class="card-title">Seasonal Tips for Better Yields</h5>
+            <p class="card-text">Discover the best practices and tasks for each season to boost your crop yields.</p>
+            <a href="#" class="btn btn-primary">Get Seasonal Tips</a>
+        </div>
+    </div>
+</div>
+
+<!-- Pest & Disease Control Card -->
+<div class="col-md-4 mb-4">
+    <div class="card shadow-sm">
+        <img src="{% static 'images/r5.jpg' %}" class="card-img-top" alt="Pest & Disease Control">
+        <div class="card-body">
+            <h5 class="card-title">Pest & Disease Control</h5>
+            <p class="card-text">Learn how to identify and control pests and diseases naturally without harming your crops.</p>
+            <a href="#" class="btn btn-primary">View Guide</a>
+        </div>
+    </div>
+</div>
+
+<!-- Soil Health and Fertility Card -->
+<div class="col-md-4 mb-4">
+    <div class="card shadow-sm">
+        <img src="{% static 'images/r6.jpg' %}" class="card-img-top" alt="Soil Health">
+        <div class="card-body">
+            <h5 class="card-title">Soil Health and Fertility</h5>
+            <p class="card-text">Improve soil health through organic practices for better crop yields.</p>
+            <a href="#" class="btn btn-primary">Improve Soil Health</a>
+        </div>
+    </div>
+</div>
+
+<!-- Watch Tutorials Card -->
+<div class="col-md-4 mb-4">
+    <div class="card shadow-sm">
+        <img src="{% static 'images/tut1.png' %}" class="card-img-top" alt="Watch Tutorials">
+        <div class="card-body">
+            <h5 class="card-title">Watch Our Tutorials</h5>
+            <p class="card-text">Learn from the experts through easy-to-follow video tutorials on best farming practices.</p>
+            <a href="#" class="btn btn-primary">Watch Now</a>
+        </div>
+    </div>
+</div>
+
+            </section>
+            
+
+        </div>
+
+        <div class="section">
+            <section id="learn-innovate-thrive" class="py-5" style="background-color: #e8f0f2;">
+                <div class="container">
+                    <h2 class="text-center">Learn, Innovate, Thrive</h2>
+                    <p class="text-center mb-5">Access expert-led webinars, success stories, and video tutorials to stay ahead in farming innovation.</p>
+            
+                    <div class="row">
+                        <!-- Video in English -->
+                        <div class="col-md-4 mb-4">
+                            <div class="card shadow-sm">
+                                <div class="embed-responsive embed-responsive-16by9">
+                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/FW_bw9jdrlQ?si=TDVcycj2P1lkQYnY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">Farming Techniques in English</h5>
+                                    <p class="card-text">Watch this video to learn about modern farming techniques in English, presented by industry experts.</p>
+                                    <a href="https://youtu.be/v1DT4yvxpMw?feature=shared" class="btn btn-primary" target="_blank">Watch on YouTube</a>
+                                </div>
+                            </div>
+                        </div>
+            
+                        <!-- Video in Hindi -->
+                        <div class="col-md-4 mb-4">
+                            <div class="card shadow-sm">
+                                <div class="embed-responsive embed-responsive-16by9">
+                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/Uo05345F1C8?si=mnmEtAh_mCTkicGv" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">कृषि तकनीक (Hindi)</h5>
+                                    <p class="card-text">Watch this video in Hindi to learn about crop management and pest control in a regional language.</p>
+                                    <a href="https://www.youtube.com/watch?v=example-video2" class="btn btn-primary" target="_blank">Watch on YouTube</a>
+                                </div>
+                            </div>
+                        </div>
+            
+                        <!-- Video in Telugu -->
+                        <div class="col-md-4 mb-4">
+                            <div class="card shadow-sm">
+                                <div class="embed-responsive embed-responsive-16by9">
+                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/FLhMcM88EvM?si=Sd_1RyfiRRHQ82eA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title"> ఉపాయాలు (Telugu)</h5>
+                                    <p class="card-text">A Telugu-language video showcasing modern agricultural methods to increase yield and reduce costs.</p>
+                                    <a href="https://www.youtube.com/watch?v=example-video3" class="btn btn-primary" target="_blank">Watch on YouTube</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            
+                    <div class="row">
+                        <!-- Video in Kannada -->
+                        <div class="col-md-4 mb-4">
+                            <div class="card shadow-sm">
+                                <div class="embed-responsive embed-responsive-16by9">
+                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/MOatp5-mTlo?si=HuQypI5RpujUiM0S" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">ಕೃಷಿ ವಿಧಾನಗಳು (Kannada)</h5>
+                                    <p class="card-text">Learn about soil management, water conservation, and more in Kannada for farmers in the region.</p>
+                                    <a href="https://www.youtube.com/watch?v=example-video4" class="btn btn-primary" target="_blank">Watch on YouTube</a>
+                                </div>
+                            </div>
+                        </div>
+            
+                        <!-- Video in Tamil -->
+                        <div class="col-md-4 mb-4">
+                            <div class="card shadow-sm">
+                                <div class="embed-responsive embed-responsive-16by9">
+                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/jxckTFR1EqM?si=kYzI6kbYjSAtd5uq" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">சாகுபடி முறைகள் (Tamil)</h5>
+                                    <p class="card-text">This Tamil-language video will help you understand organic farming techniques and pest management.</p>
+                                    <a href="https://www.youtube.com/watch?v=example-video5" class="btn btn-primary" target="_blank">Watch on YouTube</a>
+                                </div>
+                            </div>
+                        </div>
+            
+                        <!-- Video in Malayalam -->
+                        <div class="col-md-4 mb-4">
+                            <div class="card shadow-sm">
+                                <div class="embed-responsive embed-responsive-16by9">
+                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/t5pxW_g0T2A?si=rhvzx7F1Yp03E_iP" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">കൃഷി ഉപദേശങ്ങൾ (Malayalam)</h5>
+                                    <p class="card-text">A Malayalam-language video covering sustainable farming practices and modern agricultural technology.</p>
+                                    <a href="https://www.youtube.com/watch?v=example-video6" class="btn btn-primary" target="_blank">Watch on YouTube</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+        </div>
+
+        <div class="section">
+            <div section id="sustainable">
+                
+                <div class="video-container" style="margin-top: 20px;">
+                    <video controls autoplay muted loop style="width: 100%; max-width: 800px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
+                        <source src="{% static 'images/Video.mp4' %}" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+    
+                <div class="video-description" style="margin-top: 20px; text-align: center;">
+                    <h3>Learn More About Sustainable Farming</h3>
+                    <p>Watch this insightful video to discover how sustainable farming practices can transform your agricultural yield while protecting the environment.</p>
+                    <a href="#" class="btn btn-primary" style="background-color: #2e7d32; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Learn More</a>
+                </div>
+                
+                <hr class="section-divider" style="margin-top: 40px;">
+            </div>
+
+            <hr class="section-divider">
+        </div>
+
+        <div class="section">
+            <section id="join-community">
+                <div class="image-section">
+                    <div class="circle-image left">
+                        <img src="{% static 'images/global.jpg' %}" alt="Community Member 1">
+                    </div>
+                    <div class="circle-image right">
+                        <img src="{% static 'images/g1.jpg' %}" alt="Community Member 2">
+                    </div>
+                </div>
+            
+                <div class="content">
+                    <h2>Join Our Community</h2>
+                    <p>
+                        Connect with a vibrant network of farmers sharing knowledge, insights, and sustainable farming practices. Let’s grow together!
+                    </p>
+                    <button class="cta-button">See Members</button>
+                </div>
+            </section>
+            
+            
+        </div>
+
+    </div>
+
+</body>
+</html>
+
+
+
+   
+    

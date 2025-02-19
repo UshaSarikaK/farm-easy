@@ -1,0 +1,412 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Government Schemes for Farmers</title>
+    <link rel="stylesheet" href="style1.css">
+    <style>
+        .hero {
+            height: 100vh;
+            background: url('{% static "images/back.jpg" %}') no-repeat center center;
+            background-size: cover; /* Ensures the background covers the entire section */
+            background-position: center; /* Keeps the background centered */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            position: relative;
+            margin-top: 100px;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5); /* Dark overlay to improve text contrast */
+            z-index: 1;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .hero-content h1 {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            font-family: Georgia, serif;
+        }
+        
+        .hero-content h2 {
+            font-size: 1.8rem;
+            font-weight: 400;
+            font-family: Georgia, serif;
+        }
+        
+        /* Resources Section Styles */
+        .resources-section {
+            padding: 50px 20px;
+            background-color: #fff;
+            text-align: center;
+        }
+        
+        .resources-section h2 {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #333;
+            position: relative;
+        }
+        
+        .resources-section h2::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 3px;
+            margin: 10px auto 30px auto;
+        }
+        
+        /* Resource Container */
+        .resources-container {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+        
+        /* Individual Resource Box */
+        .resource {
+            text-align: center;
+            width: 150px;
+        }
+        
+        /* Circular Images */
+        .resource img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        
+        .resource img:hover {
+            transform: scale(1.1);
+        }
+        
+        /* Resource Text */
+        .resource p {
+            margin-top: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        /* Highlight Specific Text */
+        .resource p.highlight {
+            color: #6a3ea6; /* Purple accent for highlighted text */
+        }
+        
+        
+        /* Benefits Section Styles */
+        .benefits-section {
+            padding: 50px 20px;
+            background-color: #f4f4f4;
+            text-align: center;
+        }
+        
+        .benefits-section h2 {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #333;
+            position: relative;
+        }
+        
+        .benefits-section h2::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 3px;
+            margin: 10px auto 30px auto;
+        }
+        
+        /* Benefit Container */
+        .benefit {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background-color: #fff;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Reverse Class to Alternate Layout */
+        .benefit.reverse {
+            flex-direction: row-reverse;
+        }
+        
+        /* Benefit Image */
+        .benefit-img {
+            width: 30%;
+        }
+        
+        .benefit-img img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+        /* Benefit Description */
+        .benefit-desc {
+            width: 100%;
+            text-align: left;
+            padding: 0 20px;
+        }
+        
+        .benefit-desc p {
+            font-size: 18px; /* Increased from 16px */
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .benefit-desc p + p {
+            font-size: px; /* Increased from 14px */
+            font-weight: normal;
+            color: #666;
+            margin-top: 10px;
+        }
+        
+        /* Schemes Section Styles */
+        .schemes-section {
+            padding: 50px 20px;
+            background-color: #f9f9f9;
+            text-align: center;
+        }
+        
+        .schemes-section h2 {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 30px;
+            color: #333;
+            position: relative;
+        }
+        
+        .schemes-container {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+        
+        /* Individual Scheme */
+        .scheme {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Reverse the layout for alternate schemes */
+        .scheme.reverse {
+            flex-direction: row-reverse;
+        }
+        
+        /* Scheme Image */
+        .scheme-img {
+            flex: 1;
+        }
+        
+        .scheme-img img {
+            width: 100%;
+            max-width: 250px;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Scheme Description */
+        .scheme-desc {
+            flex: 2;
+            text-align: left;
+        }
+        
+        .scheme-desc h3 {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #16423C;
+            margin-bottom: 10px;
+        }
+        
+        .scheme-desc p {
+            font-size: 1rem;
+            color: #555;
+            line-height: 1.5;
+        }
+    </style>
+    <script>
+        // Multilingual content for schemes
+        const content = {
+            navbar: {
+                en: {
+                    home: "Home",
+                    advisory: "Advisory",
+                    sell: "Sell",
+                    microfinance: "Microfinance",
+                    knowledgeHub: "Knowledge-Hub",
+                    logout: "Log Out"
+                },
+                hi: {
+                    home: "होम",
+                    advisory: "सलाह",
+                    sell: "बिक्री",
+                    microfinance: "सूक्ष्म वित्त",
+                    knowledgeHub: "ज्ञान-केन्द्र",
+                    logout: "लॉग आउट"
+                },
+                te: {
+                    home: "హోమ్",
+                    advisory: "సలహా",
+                    sell: "అమ్మకం",
+                    microfinance: "మైక్రోఫైనాన్స్",
+                    knowledgeHub: "జ్ఞాన-కేంద్రం",
+                    logout: "లాగ్ అవుట్"
+                }
+            }
+        };
+        
+
+        const schemes = [
+
+            {
+                title: {
+                    en: "Pradhan Mantri Fasal Bima Yojana",
+                    hi: "प्रधानमंत्री फसल बीमा योजना",
+                    te: "ప్రధాన్ మంత్రి పంటల బీమా యోజన"
+                },
+                description: {
+                    en: "Pradhan Mantri Fasal Bima Yojana (PMFBY) is a comprehensive crop insurance scheme aimed at supporting farmers financially in the event of crop failure due to natural disasters, pests, and diseases.",
+                    hi: "प्रधानमंत्री फसल बीमा योजना (PMFBY) प्राकृतिक आपदाओं, कीटों और बीमारियों के कारण फसल विफलता के समय किसानों को वित्तीय समर्थन प्रदान करती है।",
+                    te: "ప్రధాన్ మంత్రి పంటల బీమా యోజన (PMFBY) ప్రకృతి వైపరీత్యాలు, కీటకాలు మరియు వ్యాధుల వల్ల పంటల విఫలత సమయంలో ఆర్థిక సహాయం అందిస్తుంది."
+                },
+                image: "{% static 'images/bheema.jpg' %}"
+            },
+            {
+                title: {
+                    en: "Pradhan Mantri Kisan Samman Nidhi Yojana",
+                    hi: "प्रधानमंत्री किसान सम्मान निधि योजना",
+                    te: "ప్రధాన్ మంత్రి కిసాన్ సమ్మాన్ నిధి యోజన"
+                },
+                description: {
+                    en: "PM-KISAN provides ₹6,000 annually to small and marginal farmers in three installments to support their financial needs.",
+                    hi: "प्रधानमंत्री किसान सम्मान निधि योजना छोटे और सीमांत किसानों को ₹6,000 वार्षिक सहायता देती है।",
+                    te: "ప్రధాన్ మంత్రి కిసాన్ సమ్మాన్ నిధి యోజన చిన్న మరియు పరిమితి రైతులకు ₹6,000 సంవత్సరానికి అందిస్తుంది."
+                },
+                image: "{% static 'images/kisan.jpg' %}"
+            },
+            {
+                title: {
+                    en: "Soil Health Card Scheme",
+                    hi: "मृदा स्वास्थ्य कार्ड योजना",
+                    te: "మట్టివ్యవస్థ ఆరోగ్య కార్డ్ స్కీం"
+                },
+                description: {
+                    en: "This scheme provides farmers with soil health information, helping them use fertilizers efficiently to improve productivity.",
+                    hi: "मृदा स्वास्थ्य कार्ड योजना किसानों को मिट्टी की सेहत की जानकारी देती है।",
+                    te: "మట్టివ్యవస్థ ఆరోగ్య కార్డ్ పథకం రైతులకు మట్టియొక్క ఆరోగ్య సమాచారం అందిస్తుంది."
+                },
+                image: "{% static 'images/soil.jpg' %}"
+            },
+            {
+                title: {
+                    en: "Organic Farming Incentive Scheme",
+                    hi: "ऑर्गेनिक फार्मिंग इंसेंटिव स्कीम",
+                    te: "ఆర్గానిక్ ఫార్మింగ్ ఇన్సెంటివ్ స్కీం"
+                },
+                description: {
+                    en: "Encourages organic farming by offering financial assistance and training for sustainable agricultural practices.",
+                    hi: "ऑर्गेनिक फार्मिंग स्कीम जैविक खेती को प्रोत्साहित करती है।",
+                    te: "ఆర్గానిక్ ఫార్మింగ్ స్కీం ఆర్గానిక్ వ్యవసాయ పద్ధతులను ప్రోత్సహిస్తుంది."
+                },
+                image: "{% static 'images/organic.jpg' %}"
+            }
+        ];
+
+        function changeLanguage() {
+            const selectedLanguage = document.getElementById('language-selector').value;
+
+            // Update navbar text
+            document.querySelectorAll('.nav-links li a').forEach((link, index) => {
+                const keys = Object.keys(content.navbar[selectedLanguage]);
+                link.textContent = content.navbar[selectedLanguage][keys[index]];
+            });
+
+            // Update schemes section
+            const schemesContainer = document.getElementById('schemes-container');
+            schemesContainer.innerHTML = ''; // Clear existing content
+
+            schemes.forEach((scheme, index) => {
+                const schemeElement = document.createElement('div');
+                schemeElement.classList.add('scheme');
+                if (index % 2 !== 0) schemeElement.classList.add('reverse');
+
+                const imgDiv = document.createElement('div');
+                imgDiv.classList.add('scheme-img');
+                const img = document.createElement('img');
+                img.src = scheme.image;
+                img.alt = scheme.title[selectedLanguage];
+                imgDiv.appendChild(img);
+
+                const descDiv = document.createElement('div');
+                descDiv.classList.add('scheme-desc');
+                const title = document.createElement('h3');
+                title.textContent = scheme.title[selectedLanguage];
+                const description = document.createElement('p');
+                description.textContent = scheme.description[selectedLanguage];
+                descDiv.appendChild(title);
+                descDiv.appendChild(description);
+
+                schemeElement.appendChild(imgDiv);
+                schemeElement.appendChild(descDiv);
+                schemesContainer.appendChild(schemeElement);
+            });
+        }
+
+        window.onload = changeLanguage;
+    </script>
+</head>
+<body>
+    <!-- Navbar -->
+    {% include 'navbar.html' %}
+    <div class="actions">
+        <select class="language-selector" id="language-selector" onchange="changeLanguage()">
+            <option value="en">English</option>
+            <option value="hi">हिन्दी</option>
+            <option value="te">తెలుగు</option>
+        </select>
+    </div>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Government Schemes for Farmers</h1>
+        </div>
+    </section>
+
+    <section class="schemes-section">
+        <h2>Available Government Schemes</h2>
+        <div id="schemes-container" class="schemes-container">
+            <!-- Content will be dynamically generated here -->
+        </div>
+    </section>
+</body>
+</html>

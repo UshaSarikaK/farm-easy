@@ -1,0 +1,310 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arable Website</title>
+    <style>
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #16423C;
+            padding: 20px 40px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .navbar .logo h1 {
+            color: white;
+            font-size: 24px;
+            font-family: 'Lora', serif;
+        }
+
+        .navbar .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+
+        .navbar .nav-links li a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            padding: 8px 15px;
+            transition: 0.3s;
+        }
+
+        .navbar .nav-links li a:hover {
+            border-bottom: 3px solid #FFC700;
+        }
+        
+        /* Hero Section Styles */
+        /* Hero Section Styles */
+        .hero {
+            height: 100vh;
+            background: url('{% static "images/gardentips.jpg" %}') no-repeat center center;
+            background-size: cover; /* Ensures the background covers the entire section */
+            background-position: center; /* Keeps the background centered */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            position: relative;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5); /* Dark overlay to improve text contrast */
+            z-index: 1;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .hero-content h1 {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            font-family: Georgia, serif;
+        }
+        
+        .hero-content h2 {
+            font-size: 1.8rem;
+            font-weight: 400;
+            font-family: Georgia, serif;
+        }
+        
+        /* Resources Section Styles */
+        .resources-section {
+            padding: 50px 20px;
+            background-color: #fff;
+            text-align: center;
+        }
+        
+        .resources-section h2 {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #333;
+            position: relative;
+        }
+        
+        .resources-section h2::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 3px;
+            margin: 10px auto 30px auto;
+        }
+        
+        /* Resource Container */
+        .resources-container {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+        
+        /* Individual Resource Box */
+        .resource {
+            text-align: center;
+            width: 150px;
+        }
+        
+        /* Circular Images */
+        .resource img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        
+        .resource img:hover {
+            transform: scale(1.1);
+        }
+        
+        /* Resource Text */
+        .resource p {
+            margin-top: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        /* Highlight Specific Text */
+        .resource p.highlight {
+            color: #6a3ea6; /* Purple accent for highlighted text */
+        }
+        
+        
+        /* Benefits Section Styles */
+        .benefits-section {
+            padding: 50px 20px;
+            background-color: #f4f4f4;
+            text-align: center;
+        }
+        
+        .benefits-section h2 {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #333;
+            position: relative;
+        }
+        
+        .benefits-section h2::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 3px;
+            margin: 10px auto 30px auto;
+        }
+        
+        /* Benefit Container */
+        .benefit {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background-color: #fff;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Reverse Class to Alternate Layout */
+        .benefit.reverse {
+            flex-direction: row-reverse;
+        }
+        
+        /* Benefit Image */
+        .benefit-img {
+            width: 30%;
+        }
+        
+        .benefit-img img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+        /* Benefit Description */
+        .benefit-desc {
+            width: 100%;
+            text-align: left;
+            padding: 0 20px;
+        }
+        
+        .benefit-desc p {
+            font-size: 18px; /* Increased from 16px */
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .benefit-desc p + p {
+            font-size: px; /* Increased from 14px */
+            font-weight: normal;
+            color: #666;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <h1>FarmEasy For Tourists</h1>
+        </div>
+        <ul class="nav-links">
+            <li><a href="{% url 'tourist' %}">Home</a></li>
+            <li><a href="{% url 'tourist_centres' %}">Agriculture Centres</a></li>
+            <li><a href="{% url 'tourist_buy' %}">MarketPlace</a></li>
+            <li><a href="{% url 'garden' %}">Gardening Tips</a></li>
+            <li><a href="">Hello,tourist123</a></li>
+        </ul>
+    </nav>
+   <!-- Hero Section -->
+   <section class="hero">
+        <div class="hero-content">
+            <h1>The Right Choice.</h1>
+            <h2>Improving Agriculture, Improving Lives.</h2>
+        </div>
+    </section>
+
+    <!-- Resources Section -->
+    <section class="resources-section">
+        <h2>Discover More Detailed Resources</h2>
+        <div class="resources-container">
+            <div class="resource">
+                <img src="{% static 'images/vegetable-gardening.jpg' %}" alt="Vegetable Gardening">
+                <p class="highlight">Vegetable Gardening</p>
+            </div>
+            <div class="resource">
+                <img src="{% static 'images/raised-beds.jpg' %}" alt="Raised Beds & Container Gardening">
+                <p>Raised Beds & Container Gardening</p>
+            </div>
+            <div class="resource">
+                <img src="{% static 'images/seeds-and-plants.jpg' %}" alt="Seeds and Plants">
+                <p>Seeds and Plants</p>
+            </div>
+            <div class="resource">
+                <img src="{% static 'images/Raising Specialty Crops.jpg' %}" alt="Raising Specialty Crops">
+                <p>Raising Specialty Crops</p>
+            </div>
+        </div>
+    </section>
+    <!-- Benefits Section -->
+    <section class="benefits-section">
+        <h2>Benefits of Sustainable Farming</h2>
+        <div class="benefit">
+            <div class="benefit-img">
+                <img src="{% static 'images/soil.jpg' %}" alt="Soil Health">
+            </div>
+            <div class="benefit-desc">
+                <p><strong>Improves Soil Health</strong></p>
+                <p>Healthy soil is key to sustainable farming. It improves crop yield and helps maintain a balanced ecosystem.</p>
+            </div>
+        </div>
+        <div class="benefit reverse">
+            <div class="benefit-img">
+                <img src="{% static 'images/water.jpg' %}" alt="Water Conservation">
+            </div>
+            <div class="benefit-desc">
+                <p><strong>Enhances Water Conservation</strong></p>
+                <p>Conserving water is essential for sustainable agriculture. It reduces wastage and ensures long-term water availability.</p>
+            </div>
+        </div>
+        <div class="benefit">
+            <div class="benefit-img">
+                <img src="{% static 'images/biodiversity.jpg' %}" alt="Biodiversity">
+            </div>
+            <div class="benefit-desc">
+                <p><strong>Promotes Biodiversity</strong></p>
+                <p>Encouraging biodiversity in farming helps maintain a healthy ecosystem and reduces the need for harmful chemicals.</p>
+            </div>
+        </div>
+        <div class="benefit reverse">
+            <div class="benefit-img">
+                <img src="{% static 'images/climate.jpg' %}" alt="Climate Resilience">
+            </div>
+            <div class="benefit-desc">
+                <p><strong>Builds Climate Resilience</strong></p>
+                <p>Sustainable farming practices help adapt to climate change by improving resilience against extreme weather patterns.</p>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

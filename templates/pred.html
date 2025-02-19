@@ -1,0 +1,255 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fertilizer Prediction</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #81c784, #4caf50);
+            color: #333;
+        }
+
+        .container {
+            display: flex;
+            gap: 20px;
+            margin-top: 450px;
+            width: 90%;
+            max-width: 1200px;
+            padding: 20px;
+            background: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .left-box,
+        .right-box {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            border-radius: 10px;
+            background: #f9f9f9;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .left-box:hover,
+        .right-box:hover {
+            transform: scale(1.03);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            font-size: 2rem;
+            text-align: center;
+            color: #2e7d32;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #388e3c;
+        }
+
+        input[type="text"],
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            box-sizing: border-box;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        input[type="text"]:focus,
+        select:focus {
+            border-color: #66bb6a;
+            box-shadow: 0 0 5px rgba(102, 187, 106, 0.5);
+            outline: none;
+        }
+
+        button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            background-color: #43a047;
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        button:hover {
+            background-color: #2e7d32;
+            transform: translateY(-3px);
+        }
+
+        #status {
+            margin-top: 10px;
+            font-weight: bold;
+            color: #d32f2f;
+        }
+
+        .right-box p {
+            font-size: 1rem;
+            font-weight: bold;
+            color: #2e7d32;
+            background-color: #e8f5e9;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #c8e6c9;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    {% include 'navbar.html' %}
+    <div class="container">
+        <div class="left-box">
+            <h1>Fertilizer Prediction</h1>
+            <form id="prediction-form" action="{% url 'farmer_pred' %}" method="post">
+                {% csrf_token %}
+
+                <div class="form-group">
+                    <label for="soil_type">Soil Type:</label>
+                    <input type="text" id="soil_type" name="soil_type">
+                    <button type="button" id="listen-soil">Listen</button>
+                </div>
+
+                <div class="form-group">
+                    <label for="crop_type">Crop Type:</label>
+                    <input type="text" id="crop_type" name="crop_type">
+                    <button type="button" id="listen-crop">Listen</button>
+                </div>
+
+                <div class="form-group">
+                    <label for="city">City:</label>
+                    <select id="city" name="city" required>
+                        <option value="Hyderabad">Hyderabad</option>
+                        <option value="Delhi">Delhi</option>
+                        <option value="Mumbai">Mumbai</option>
+                        <option value="Chennai">Chennai</option>
+                    </select>
+                </div>
+
+                <button type="submit">Predict</button>
+            </form>
+            <p id="status"></p>
+        </div>
+
+        <div class="right-box">
+            <h2>Prediction Result</h2>
+            <p id="result">{{ result }}</p>
+
+            {% if description %}
+            <h2>Fertilizer Description</h2>
+            <p id="description">{{ description }}</p>
+            {% endif %}
+
+            {% if nutrient_composition %}
+            <h2>Nutrient Composition</h2>
+            <p id="nutrient-composition">{{ nutrient_composition }}</p>
+            {% endif %}
+
+            {% if recommended_quantity %}
+            <h2>Recommended Quantity</h2>
+            <p id="recommended-quantity">{{ recommended_quantity }}</p>
+            {% endif %}
+
+            {% if application_guidelines %}
+            <h2>Application Guidelines</h2>
+            <p id="application-guidelines">{{ application_guidelines }}</p>
+            {% endif %}
+
+            {% if yield_improvement %}
+            <h2>Expected Yield Improvement</h2>
+            <p id="yield-improvement">{{ yield_improvement }}</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <script>
+        const startButtonSoil = document.getElementById("listen-soil");
+        const startButtonCrop = document.getElementById("listen-crop");
+        const status = document.getElementById("status");
+
+        function setupSpeechRecognition(inputId) {
+            if (!('webkitSpeechRecognition' in window)) {
+                alert("Your browser does not support speech recognition. Please try Google Chrome.");
+                return;
+            }
+
+            const recognition = new webkitSpeechRecognition();
+            recognition.lang = 'te-IN';
+            recognition.interimResults = false;
+            recognition.maxAlternatives = 1;
+
+            recognition.onstart = () => {
+                status.textContent = "Listening...";
+            };
+
+            recognition.onerror = (event) => {
+                status.textContent = "Error: " + event.error;
+            };
+
+            recognition.onend = () => {
+                status.textContent = "Stopped listening.";
+            };
+
+            recognition.onresult = (event) => {
+                const speechText = event.results[0][0].transcript;
+                status.textContent = "Recognized: " + speechText;
+
+                fetch('/translate/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': getCookie('csrftoken')
+                    },
+                    body: JSON.stringify({ speech_text: speechText })
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        document.getElementById(inputId).value = data.translated_text.charAt(0).toUpperCase() + data.translated_text.slice(1);
+                    })
+                    .catch(error => console.error('Error:', error));
+            };
+
+            recognition.start();
+        }
+
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let cookie of cookies) {
+                    cookie = cookie.trim();
+                    if (cookie.startsWith(name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.slice(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        startButtonSoil.addEventListener("click", () => setupSpeechRecognition('soil_type'));
+        startButtonCrop.addEventListener("click", () => setupSpeechRecognition('crop_type'));
+    </script>
+</body>
+</html>
