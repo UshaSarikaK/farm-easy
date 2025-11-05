@@ -79,7 +79,7 @@ WSGI_APPLICATION = 'FarmEasy.wsgi.application'
 DATABASES = {
     'default':{
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME':'abhi',
+        'NAME':'usha',
         'USER':'postgres',
         'PASSWORD':'1234',
         'HOST':'localhost'
